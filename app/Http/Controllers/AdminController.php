@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class IndexController
+class AdminController
 {
     function index()
     {
         $data = [
-            'title' => '',
+            'title' => 'Admin'
         ];
 
-        return view('index', $data);
+        return view('admin.index', $data);
     }
 }

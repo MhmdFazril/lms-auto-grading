@@ -8,6 +8,15 @@ class AuthController
 {
     function login()
     {
-        return view('auth.login');
+        $data = [
+            'title' => 'Login Page',
+        ];
+        return view('auth.login', $data);
+    }
+
+
+    function auth(Request $request)
+    {
+        return redirect('/dashboard')->with('successToast', 'Selamat datang');
     }
 }

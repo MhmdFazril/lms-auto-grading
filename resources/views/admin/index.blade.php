@@ -1,0 +1,51 @@
+@extends('layout.app')
+@section('content')
+    <div class="tabs tabs-border m-5">
+        <!-- General Tab -->
+        <input type="radio" name="admin_tabs" class="tab" aria-label="General" checked />
+        <div class="tab-content border border-base-300 bg-base-100 p-6 space-y-5">
+            <section>
+                <h2 class="text-lg font-semibold text-gray-700 mb-3">General Settings</h2>
+                <div class="ml-4 space-y-2">
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Logos</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Site Settings</a>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-lg font-semibold text-gray-700 mb-3">School Settings</h2>
+                <div class="ml-4 space-y-2">
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">School master</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Class master</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Users Tab -->
+        <input type="radio" name="admin_tabs" class="tab" aria-label="Users" />
+        <div class="tab-content border border-base-300 bg-base-100 p-6 space-y-5">
+            <section>
+                <h2 class="text-lg font-semibold text-gray-700 mb-3">User Management</h2>
+                <div class="ml-4 space-y-2">
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
+                        users</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new user</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Courses Tab -->
+        <input type="radio" name="admin_tabs" class="tab" aria-label="Courses" />
+        <div class="tab-content border border-base-300 bg-base-100 p-6 space-y-5">
+            <section>
+                <h2 class="text-lg font-semibold text-gray-700 mb-3">Course Management</h2>
+                <div class="ml-4 space-y-2">
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Manage courses and
+                        categories</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new category</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new course</a>
+                </div>
+            </section>
+        </div>
+    </div>
+@endsection
