@@ -13,10 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nip', 20)->unique()->nullable();
+            $table->string('nisn', 20)->unique()->nullable();
+            $table->string('nama', 100)->nullable();
+            $table->string('wali', 100)->nullable();
+            $table->string('tempat_tgl_lahir', 100);
+            $table->date('tgl_lahir');
+            $table->text('alamat')->nullable();
+            $table->text('alamat_wali')->nullable();
+            $table->string('telp', 15)->nullable();
+            $table->string('wa', 15)->nullable();
+            $table->string('telp_wali', 15)->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('id_school')->nullable();
+            $table->text('gambar')->nullable();
+            $table->enum('role', ['admin', 'teacher', 'student'])->default('student');
             $table->rememberToken();
             $table->timestamps();
         });

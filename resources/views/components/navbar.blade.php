@@ -29,33 +29,33 @@
     {{-- @endif --}}
 </div>
 
-{{-- @if (Auth::check() && Route::currentRouteName() == 'dashboard') --}}
-<div class="border-b-2 border-b-grf-primary flex space-x-4 overflow-auto">
-    <a href="#" class="p-3 hover:bg-grf-primary group ">
-        <section class="group-hover:text-white"><i class="fa-solid fa-house"></i> Home</section>
-    </a>
+@if (Route::currentRouteName() == 'dashboard' || Route::currentRouteName() == 'site-admin')
+    <div class="border-b-2 border-b-grf-primary flex space-x-4 overflow-auto">
+        <a href="{{ route('dashboard') }}" class="p-3 hover:bg-grf-primary group ">
+            <section class="group-hover:text-white"><i class="fa-solid fa-house"></i> Home</section>
+        </a>
 
-    <button popovertarget="popover-1" class="p-3 hover:bg-grf-primary group hover:text-white"
-        style="anchor-name:--anchor-1">
-        <i class="fa-solid fa-briefcase "></i> My Courses
-    </button>
-    <ul class="dropdown menu w-52 rounded-box bg-grf-primary shadow-sm" popover id="popover-1"
-        style="position-anchor:--anchor-1">
-        <li>
-            <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
-        </li>
-        <li>
-            <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
-        </li>
-        <li>
-            <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
-        </li>
-    </ul>
+        <button popovertarget="popover-1" class="p-3 hover:bg-grf-primary group hover:text-white"
+            style="anchor-name:--anchor-1">
+            <i class="fa-solid fa-briefcase "></i> My Courses
+        </button>
+        <ul class="dropdown menu w-52 rounded-box bg-grf-primary shadow-sm" popover id="popover-1"
+            style="position-anchor:--anchor-1">
+            <li>
+                <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
+            </li>
+            <li>
+                <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
+            </li>
+            <li>
+                <a href="#" class="text-white"><i class="fa-solid fa-graduation-cap"></i> Kewarganegaraan</a>
+            </li>
+        </ul>
 
 
-    <a href="{{ route('site-admin') }}" class="p-3 hover:bg-grf-primary group ">
-        <section class="group-hover:text-white"><i class="fa-solid fa-user-tie"></i> Site
-            Administration</section>
-    </a>
-</div>
-{{-- @endif --}}
+        <a href="{{ route('site-admin') }}" class="p-3 hover:bg-grf-primary group ">
+            <section class="group-hover:text-white"><i class="fa-solid fa-user-tie"></i> Site
+                Administration</section>
+        </a>
+    </div>
+@endif

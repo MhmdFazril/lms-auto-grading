@@ -23,11 +23,31 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // return [
+        //     'name' => fake()->name(),
+        //     'email' => fake()->unique()->safeEmail(),
+        //     'email_verified_at' => now(),
+        //     'password' => static::$password ??= Hash::make('password'),
+        //     'remember_token' => Str::random(10),
+        // ];
+
         return [
-            'name' => fake()->name(),
+            'nip' => fake()->unique()->numerify('###########'), // NIP unik
+            'nisn' => fake()->unique()->numerify('##########'), // NISN unik
+            'nama' => fake()->name(),
+            'wali' => fake()->name(),
+            'tempat_tgl_lahir' => fake()->city(),
+            'tgl_lahir' => fake()->date(),
+            'alamat' => fake()->address(),
+            'alamat_wali' => fake()->address(),
+            'telp' => fake()->optional()->numerify('08##########'),
+            'wa' => fake()->optional()->numerify('08##########'),
+            'telp_wali' => fake()->numerify('08##########'),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => bcrypt('password'), // Default password
+            'id_school' => rand(1, 10), // Anggap ada 10 sekolah di tabel schools
+            'role' => fake()->randomElement(['admin', 'teacher', 'student']),
             'remember_token' => Str::random(10),
         ];
     }
@@ -37,7 +57,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }

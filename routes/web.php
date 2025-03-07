@@ -23,3 +23,7 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 
 // site administration
 Route::get('/site-admin', [AdminController::class, 'index'])->name('site-admin');
+
+Route::get('/addTeacher', [AdminController::class, 'addTeacher'])->name('addTeacher');
+Route::get('/addStudent', [AdminController::class, 'addStudent'])->name('addStudent');
+Route::post('/adduser', [AdminController::class, 'insertUser'])->name('insertUser');

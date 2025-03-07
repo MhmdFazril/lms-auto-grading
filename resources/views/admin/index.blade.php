@@ -29,7 +29,13 @@
                 <div class="ml-4 space-y-2">
                     <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
                         users</a>
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new user</a>
+                    <a href="{{ route('addTeacher') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Add
+                        new
+                        teacher</a>
+
+                    <a href="{{ route('addStudent') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Add
+                        new
+                        student</a>
                 </div>
             </section>
         </div>
