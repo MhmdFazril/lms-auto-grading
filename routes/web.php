@@ -22,8 +22,18 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 // site administration
-Route::get('/site-admin', [AdminController::class, 'index'])->name('site-admin');
+Route::get('/admin/site-admin', [AdminController::class, 'index'])->name('site-admin');
 
-Route::get('/addTeacher', [AdminController::class, 'addTeacher'])->name('addTeacher');
-Route::get('/addStudent', [AdminController::class, 'addStudent'])->name('addStudent');
-Route::post('/adduser', [AdminController::class, 'insertUser'])->name('insertUser');
+Route::get('/admin/addTeacher', [AdminController::class, 'addTeacher'])->name('addTeacher');
+Route::get('/admin/addStudent', [AdminController::class, 'addStudent'])->name('addStudent');
+
+Route::get('/admin/editTeacher/{user:nip}', [AdminController::class, 'editTeacher'])->name('editTeacher');
+Route::get('/admin/editStudent/{user:nisn}', [AdminController::class, 'editStudent'])->name('editStudent');
+
+Route::post('/admin/addTeacher', [AdminController::class, 'createTeacher'])->name('insertTeacher');
+Route::post('/admin/addStudent', [AdminController::class, 'createStudent'])->name('insertStudent');
+
+Route::post('/admin/editTeacher', [AdminController::class, 'updateTeacher'])->name('updateTeacher');
+Route::post('/admin/editStudent', [AdminController::class, 'updateStudent'])->name('updateStudent');
+
+Route::get('/admin/userListing', [AdminController::class, 'userListing'])->name('userListing');

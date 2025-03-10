@@ -27,7 +27,8 @@
             <section>
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">User Management</h2>
                 <div class="ml-4 space-y-2">
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
+                    <a href="{{ route('userListing') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
                         users</a>
                     <a href="{{ route('addTeacher') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Add
                         new
@@ -36,6 +37,11 @@
                     <a href="{{ route('addStudent') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Add
                         new
                         student</a>
+
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Import
+                        Users</a>
+
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Export Users</a>
                 </div>
             </section>
         </div>

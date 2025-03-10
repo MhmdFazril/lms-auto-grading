@@ -80,7 +80,6 @@
             let tgl_lahir = $('#tgl_lahir')
             let telp = $('#telp')
             let wa = $('#wa')
-            let pass = $('#pass')
             let email = $('#email')
 
 
@@ -108,10 +107,6 @@
                 toastr.warning("Nomor WhatsApp tidak boleh kosong");
                 isValid = false;
             }
-            if (pass.val().trim() === "") {
-                toastr.warning("Password tidak boleh kosong");
-                isValid = false;
-            }
             if (email.val().trim() === "") {
                 toastr.warning("Email tidak boleh kosong");
                 isValid = false;
@@ -123,7 +118,6 @@
             let tgl_lahir = $('#tgl_lahir')
             let telp = $('#telp')
             let wa = $('#wa')
-            let pass = $('#pass')
             let email = $('#email')
             let wali = $('#wali')
             let alamat_wali = $('#alamat_wali')
@@ -154,10 +148,6 @@
                 toastr.warning("Nomor WhatsApp tidak boleh kosong");
                 isValid = false;
             }
-            if (pass.val().trim() === "") {
-                toastr.warning("Password tidak boleh kosong");
-                isValid = false;
-            }
             if (email.val().trim() === "") {
                 toastr.warning("Email tidak boleh kosong");
                 isValid = false;
@@ -180,7 +170,7 @@
         @endif
 
         if (isValid) {
-            $('#addform').submit()
+            $('#editform').submit()
         }
     }
 </script>
