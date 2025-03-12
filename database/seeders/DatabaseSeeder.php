@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\AcademicYear;
+use App\Models\School;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,6 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)->create();
+        User::factory(4)->create();
+
+        // School::factory(2)->create();
+
+        AcademicYear::factory(2)->create();
     }
 }

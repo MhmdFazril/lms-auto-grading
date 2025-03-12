@@ -17,8 +17,8 @@
                     <label class="block mb-2 text-sm font-medium text-white">Status</label>
                     <select id="filterStatus" class="select select-bordered w-full mb-4">
                         <option value="">Semua Status</option>
-                        <option value="Aktif">Aktif</option>
-                        <option value="Tidak Aktif">Tidak Aktif</option>
+                        <option value="Active">Aktif</option>
+                        <option value="Inactive">Tidak Aktif</option>
                     </select>
 
                     <button id="applyFilter" class="btn bg-grf-secondary  w-full">Apply</button>

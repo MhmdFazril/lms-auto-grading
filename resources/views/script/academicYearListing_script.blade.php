@@ -26,4 +26,17 @@
             // table.column(3).search(role).draw();
         });
     });
+
+
+    function modalDelete(elem, id) {
+        event.preventDefault();
+        let form = $('#deleteForm');
+
+        form.attr("action", `/admin/academic-year/${id}`);
+        $("#deleteModal")[0].showModal();
+
+        $('#deleteConfirm').on('click', function() {
+            form.submit()
+        })
+    }
 </script>
