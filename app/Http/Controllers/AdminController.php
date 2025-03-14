@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController
 {
-    public function index()
+    function index()
     {
         $data = [
             'title' => 'Site Administration'
@@ -19,7 +19,7 @@ class AdminController
     }
 
 
-    public function addTeacher()
+    function addTeacher()
     {
         $data = [
             'title' => 'Add User',
@@ -30,7 +30,7 @@ class AdminController
         return view('admin.users.addTeacher', $data);
     }
 
-    public function addStudent()
+    function addStudent()
     {
         $data = [
             'title' => 'Add User',
@@ -41,7 +41,7 @@ class AdminController
         return view('admin.users.addStudent', $data);
     }
 
-    public function createTeacher(Request $request)
+    function createTeacher(Request $request)
     {
         $validateData = $request->validate([
             'nip' => 'required|string|max:20|unique:users,nip',
@@ -54,50 +54,66 @@ class AdminController
             'password' => 'required|string|min:8',
             'email' => 'required|email|unique:users,email',
             'gambar' => 'file|image|max:2048',
+            'jenis_kelamin' => 'required',
+            'pernikahan' => 'required',
+            'pendidikan' => 'nullable|string|max:20',
+            'prodi' => 'nullable|string|max:20',
+            'lembaga_pendidikan' => 'nullable|string|max:50',
+            'tahun_lulus' => 'numeric|nullable',
         ]);
 
         if ($request->file('gambar')) {
-            $validateData['gambar'] = $request->file('gambar')->store('image-profile');
+            $validateData['gambar'] = $request->file('gambar')->store('image-user');
         }
 
-        $validateData['password'] = Hash::make($validateData['passwordd']);
+        $validateData['password'] = Hash::make($validateData['password']);
+        $validateData['role'] = 'teacher';
 
         User::create($validateData);
 
-        return redirect(route('site-admin'))->with('successToast', 'User berhasil ditambahkan.');
+        return redirect()->route('userListing')->with('successToast', 'User berhasil ditambahkan.');
     }
 
-    public function createStudent(Request $request)
+    function createStudent(Request $request)
     {
         $validateData = $request->validate([
-            'nisn' => 'required|string|max:20|unique:users,nisn',
             'nama' => 'required|string|max:100',
-            'wali' => 'required|string|max:100',
-            'alamat_wali' => 'string|nullable',
             'tempat_tgl_lahir' => 'required|string|max:100',
             'tgl_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
             'alamat' => 'string|nullable',
             'telp' => 'required|numeric|digits_between:10,15',
-            'telp_wali' => 'required|numeric|digits_between:10,15',
             'wa' => 'required|numeric|digits_between:10,15',
+            'email' => 'nullable|email',
             'password' => 'required|string|min:8',
-            'email' => 'required|email|unique:users,email',
             'gambar' => 'file|image|max:2048',
+
+            'id_major' => 'required|numeric',
+            'nis' => 'required|string|max:20|unique:users,nis',
+            'nisn' => 'required|string|max:20|unique:users,nisn',
+            'nama_wali' => 'required|string|max:100',
+            'nama_ayah' => 'required|string|max:100',
+            'nama_ibu' => 'required|string|max:100',
+            'pekerjaan_wali' => 'required|string|max:100',
+            'pekerjaan_ayah' => 'required|string|max:100',
+            'pekerjaan_ibu' => 'required|string|max:100',
+            'alamat_orwa' => 'string|nullable',
+            'telp_orwa' => 'required|numeric|digits_between:10,15',
+            'tahun_masuk' => 'numeric|required',
         ]);
 
-
         if ($request->file('gambar')) {
-            $validateData['gambar'] = $request->file('gambar')->store('image-profile');
+            $validateData['gambar'] = $request->file('gambar')->store('image-user');
         }
 
         $validateData['password'] = Hash::make($validateData['password']);
 
         User::create($validateData);
 
-        return redirect(route('site-admin'))->with('successToast', 'User berhasil ditambahkan.');
+        return redirect()->route('userListing')->with('successToast', 'User berhasil ditambahkan.');
     }
 
-    public function userListing()
+    function userListing()
     {
         $data = [
             'title' => 'List of Users',
@@ -108,99 +124,156 @@ class AdminController
         return view('admin.users.userListing', $data);
     }
 
-    public function editTeacher(User $user)
+    function editTeacher(User $user)
     {
         $data = [
             'title' => 'Edit User',
-            'script' => 'editUser_script',
+            'script' => 'editTeacher_script',
             'role' => 'Teacher',
             'user' => $user
         ];
 
-        return view('admin.users.editUser', $data);
+        return view('admin.users.editTeacher', $data);
     }
 
-    public function updateUser(Request $request)
+    function editStudent(User $user)
     {
-        if ($request->role == 'teacher') {
+        $data = [
+            'title' => 'Edit Student',
+            'script' => 'editStudent_script',
+            'role' => 'Student',
+            'user' => $user
+        ];
 
-            $rules = [
-                'nama' => 'required|string|max:100',
-                'tempat_tgl_lahir' => 'required|string|max:100',
-                'tgl_lahir' => 'required|date',
-                'alamat' => 'string|nullable',
-                'telp' => 'required|numeric|digits_between:10,15',
-                'wa' => 'required|numeric|digits_between:10,15',
-                'gambar' => 'file|image|max:2048',
-            ];
+        return view('admin.users.editStudent', $data);
+    }
 
-            if ($request->nip_old !== $request->nip) {
-                $rules['nip'] = 'required|string|max:20|unique:users,nip';
-            } else {
-                $rules['nip'] = 'required|string|max:20';
-            }
+    function updateTeacher(Request $request)
+    {
 
-            if ($request->email_old !== $request->email) {
-                $rules['email'] = 'required|string|max:20|unique:users,email';
-            } else {
-                $rules['email'] = 'required|string|max:20';
-            }
+        $rules = [
+            'nama' => 'required|string|max:100',
+            'tempat_tgl_lahir' => 'required|string|max:100',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'string|nullable',
+            'telp' => 'required|numeric|digits_between:10,15',
+            'wa' => 'required|numeric|digits_between:10,15',
+            'email' => 'required|email',
+            'gambar' => 'file|image|max:2048',
+            'jenis_kelamin' => 'required',
+            'pernikahan' => 'required',
+            'pendidikan' => 'nullable|string|max:20',
+            'prodi' => 'nullable|string|max:20',
+            'lembaga_pendidikan' => 'nullable|string|max:50',
+            'tahun_lulus' => 'numeric|nullable',
+        ];
 
-            if ($request->password !== null) {
-                $rules['password'] = 'string|min:8';
-            }
-
-            $validateData = $request->validate($rules);
-
-            if ($request->password != null) {
-                $validateData['password'] = Hash::make($validateData['password']);
-            }
+        if ($request->nip_old !== $request->nip) {
+            $rules['nip'] = 'required|string|max:20|unique:users,nip';
         } else {
-
-            $rules = [
-                'nama' => 'required|string|max:100',
-                'tempat_tgl_lahir' => 'required|string|max:100',
-                'tgl_lahir' => 'required|date',
-                'alamat' => 'string|nullable',
-                'telp' => 'required|numeric|digits_between:10,15',
-                'wa' => 'required|numeric|digits_between:10,15',
-                'gambar' => 'file|image|max:2048',
-            ];
-
-            if ($request->nisn_old !== $request->nisn) {
-                $rules['nisn'] = 'required|string|max:20|unique:users,nisn';
-            } else {
-                $rules['nisn'] = 'required|string|max:20';
-            }
-
-            if ($request->email_old !== $request->email) {
-                $rules['email'] = 'required|string|max:20|unique:users,email';
-            } else {
-                $rules['email'] = 'required|string|max:20';
-            }
-
-            if ($request->password !== null) {
-                $rules['password'] = 'string|min:8';
-            }
-
-            $validateData = $request->validate($rules);
-
-            if ($request->password != null) {
-                $validateData['password'] = Hash::make($validateData['password']);
-            }
+            $rules['nip'] = 'required|string|max:20';
         }
+
+        if ($request->password !== null) {
+            $rules['password'] = 'string|min:8';
+        }
+
+        $validateData = $request->validate($rules);
+
+        if ($request->password != null) {
+            $validateData['password'] = Hash::make($validateData['password']);
+        }
+
         if ($request->file('gambar')) {
             if ($request->gambar_old) {
                 Storage::delete($request->gambar_old);
             }
-            $validateData['gambar'] = $request->file('gambar')->store('image-profile');
-        } else if ($request->gambar_old !== null && !Storage::exists($request->gambar_old)) {
-            $validateData['gambar'] = null;
+            $validateData['gambar'] = $request->file('gambar')->store('image-user');
         }
 
+        if ($request->remove_image) {
+            Storage::delete($request->gambar_old);
+            $validateData['gambar'] = null;
+        }
 
         User::where('id', $request->id)->update($validateData);
 
         return redirect(route('userListing'))->with('successToast', 'User ' . $request->nama . ' berhasil diperbaharui.');
+    }
+
+    function updateStudent(Request $request)
+    {
+
+        $rules = [
+            'nama' => 'required|string|max:100',
+            'tempat_tgl_lahir' => 'required|string|max:100',
+            'tgl_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'string|nullable',
+            'telp' => 'required|numeric|digits_between:10,15',
+            'wa' => 'required|numeric|digits_between:10,15',
+            'email' => 'nullable|email',
+            'gambar' => 'file|image|max:2048',
+
+            'id_major' => 'required|numeric',
+            'nama_wali' => 'required|string|max:100',
+            'nama_ayah' => 'required|string|max:100',
+            'nama_ibu' => 'required|string|max:100',
+            'pekerjaan_wali' => 'required|string|max:100',
+            'pekerjaan_ayah' => 'required|string|max:100',
+            'pekerjaan_ibu' => 'required|string|max:100',
+            'alamat_orwa' => 'string|nullable',
+            'telp_orwa' => 'required|numeric|digits_between:10,15',
+            'tahun_masuk' => 'numeric|required',
+        ];
+
+        if ($request->nis_old !== $request->nis) {
+            $rules['nis'] = 'required|string|max:20|unique:users,nis';
+        } else {
+            $rules['nis'] = 'required|string|max:20';
+        }
+
+        if ($request->nisn_old !== $request->nisn) {
+            $rules['nisn'] = 'required|string|max:20|unique:users,nisn';
+        } else {
+            $rules['nisn'] = 'required|string|max:20';
+        }
+
+        if ($request->password !== null) {
+            $rules['password'] = 'string|min:8';
+        }
+
+        $validateData = $request->validate($rules);
+
+        if ($request->password != null) {
+            $validateData['password'] = Hash::make($validateData['password']);
+        }
+
+        if ($request->file('gambar')) {
+            if ($request->gambar_old) {
+                Storage::delete($request->gambar_old);
+            }
+            $validateData['gambar'] = $request->file('gambar')->store('image-user');
+        }
+
+        if ($request->remove_image) {
+            Storage::delete($request->gambar_old);
+            $validateData['gambar'] = null;
+        }
+
+        User::where('id', $request->id)->update($validateData);
+
+        return redirect(route('userListing'))->with('successToast', 'User ' . $request->nama . ' berhasil diperbaharui.');
+    }
+
+    function deleteUser(User $user)
+    {
+        User::destroy($user->id);
+
+        if ($user->gambar) {
+            Storage::delete($user->gambar);
+        }
+
+        return redirect()->route('userListing')->with('successToast', 'User ' . $user->nama . ' berhasil dihapus');
     }
 }

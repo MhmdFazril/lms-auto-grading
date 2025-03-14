@@ -69,7 +69,7 @@ class UserFactory extends Factory
             // 'id_class' => rand(1, 15), // Anggap ada 15 kelas
             'tahun_masuk' => $this->faker->year(),
             'tahun_lulus' => $this->faker->year(),
-            'nikah' => $this->faker->randomElement(['yes', 'no']),
+            'pernikahan' => $this->faker->randomElement(['yes', 'no', 'lainnya']),
             'pendidikan' => $this->faker->text(20),
             'prodi' => $this->faker->text(20),
             'lembaga_pendidikan' => $this->faker->name(),

@@ -114,6 +114,6 @@ class AcademicYearController
     {
         AcademicYear::destroy($academicYear->id);
 
-        return redirect('/admin/academic-year')->with('successToast', 'Tahun akademik berhasil dihapus');
+        return redirect()->route('academic-year.index')->with('successToast', 'Tahun akademik berhasil dihapus');
     }
 }

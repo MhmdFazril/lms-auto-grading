@@ -5,7 +5,7 @@
     'confirmId' => 'deleteConfirm',
 ])
 
-<dialog id="{{ $id }}" class="modal modal-bottom sm:modal-middle">
+<dialog id="{{ $id }}" class="modal modal-middle">
     <div class="modal-box">
         <h3 class="text-lg font-bold">{{ $title }}</h3>
         <p class="py-4">{{ $message }}</p>

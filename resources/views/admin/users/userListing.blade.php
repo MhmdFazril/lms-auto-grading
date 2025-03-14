@@ -87,16 +87,21 @@
                             </td>
                             <td>
                                 @if ($user->role == 'teacher')
-                                    <a href=" editTeacher/{{ $user->nip }}" class="btn bg-blue-700 btn-xs">
+                                    <a href="{{ route('editTeacher', ['user' => $user->nip]) }}"
+                                        class="btn bg-blue-700 btn-xs">
                                         <i class="fa-solid fa-file-pen text-white"></i>
                                     </a>
                                 @elseif ($user->role == 'student')
-                                    <a href=" editStudent/{{ $user->nisn }}" class="btn bg-blue-700 btn-xs">
+                                    <a href="{{ route(' ', ['user' => $user->nisn]) }}" class="btn bg-blue-700 btn-xs">
                                         <i class="fa-solid fa-file-pen text-white"></i>
                                     </a>
                                 @endif
-                                <a href="#" class="btn bg-red-600 btn-xs"><i
-                                        class="fa-solid fa-trash text-white"></i></a>
+                                <form method="post" class="inline-block" id="deleteForm">
+                                    @csrf
+                                    <button class="btn bg-red-600 btn-xs"
+                                        onclick="modalDelete(this, {{ $user->id }})"><i
+                                            class="fa-solid fa-trash text-white"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -104,4 +109,7 @@
             </table>
         </div>
     </div>
+
+    <x-modal.delete id="deleteModal" title="Konfirmasi hapus" message="Apakah Anda yakin ingin menghapus user ini?"
+        confirmId="deleteConfirm" />
 @endsection

@@ -42,6 +42,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/userListing', [AdminController::class, 'userListing'])->name('userListing');
 
+    Route::post('/deleteUser/{user}', [AdminController::class, 'deleteUser'])->name('deleteUser');
+
     // resource controller school
     Route::resource('/school', SchoolController::class)->except('show');
 
