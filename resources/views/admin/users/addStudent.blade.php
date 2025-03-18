@@ -12,7 +12,7 @@
                 class="space-y-3">
                 @csrf
                 <div class="collapse collapse-plus bg-base-100 border border-base-300">
-                    <input type="checkbox" class="dropdownAcc" name="my-accordion-3" checked="checked" />
+                    <input type="checkbox" class="dropdownAcc" checked="checked" />
                     <div class="collapse-title font-semibold text-white bg-grf-primary">Data Pribadi</div>
                     <div class="collapse-content text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
                         <div>
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="collapse collapse-plus border border-base-300">
-                    <input type="checkbox" class="dropdownAcc" name="my-accordion-3" />
+                    <input type="checkbox" class="dropdownAcc" />
                     <div class="collapse-title font-semibold text-white bg-grf-primary">Data Orang Tua/Wali</div>
                     <div class="collapse-content text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
                         <div>
@@ -197,7 +197,8 @@
 
 
                         <div>
-                            <label class="block mb-1">Nomor Kontak Orang Tua/Wali</label>
+                            <label class="block mb-1">Nomor Kontak Orang Tua/Wali <x-tooltip
+                                    message="isi '-' jika kosong" /></label>
                             <input type="text" class="input w-full" name="telp_orwa" id="telp_orwa"
                                 value="{{ old('telp_orwa') }}" autocomplete="off" onkeyup="onlyNumbers(this)"
                                 maxlength="15" />
@@ -207,7 +208,8 @@
                         </div>
 
                         <div>
-                            <label class="block mb-1">Alamat Orang Tua/Wali</label>
+                            <label class="block mb-1">Alamat Orang Tua/Wali <x-tooltip
+                                    message="isi '-' jika kosong" /></label>
                             <input type="text" class="input w-full" name="alamat_orwa" id="alamat_orwa"
                                 value="{{ old('alamat_orwa') }}" autocomplete="off" onkeyup="upCase(this)"
                                 maxlength="15" />
@@ -219,7 +221,7 @@
                 </div>
 
                 <div class="collapse collapse-plus border border-base-300">
-                    <input type="checkbox" class="dropdownAcc" name="my-accordion-3" />
+                    <input type="checkbox" class="dropdownAcc" />
                     <div class="collapse-title font-semibold text-white bg-grf-primary">Data Sekolah</div>
                     <div class="collapse-content text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
                         <div>
@@ -236,10 +238,16 @@
 
                         <div>
                             <label class="block mb-1">Jurusan <x-tooltip message="required" /></label>
-                            <select class="select w-full" name="id_major" id="id_major">
-                                <option value="1">Jurusan</option>
+                            <select class="select w-full" name="major_id" id="major_id">
+                                <option disabled selected>Pilih jurusan</option>
+                                <option>[+] tambah jurusan</option>
+                                @foreach ($majors as $jurusan)
+                                    <option value="{{ $jurusan->id }}"
+                                        {{ old('major_id') == $jurusan->id ? 'selected' : '' }}>{{ $jurusan->nama }}
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('id_major')
+                            @error('major_id')
                                 <p class="mt-2 text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
@@ -258,7 +266,7 @@
                 </div>
 
                 <div class="collapse collapse-plus border border-base-300">
-                    <input type="checkbox" class="dropdownAcc" name="my-accordion-3" />
+                    <input type="checkbox" class="dropdownAcc" />
                     <div class="collapse-title font-semibold text-white bg-grf-primary">User Profile</div>
                     <div class="collapse-content text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-4">
                         <div class="flex flex-col items-center">

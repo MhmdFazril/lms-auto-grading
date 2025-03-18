@@ -5,9 +5,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LogosController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\MclassController;
 use App\Http\Controllers\SchoolController;
 use App\Models\Academic_Year;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Builder\ClassConst;
+use Psy\Command\ListCommand\ClassConstantEnumerator;
 use Psy\TabCompletion\AutoCompleter;
 
 // Route::get('/', function () {
@@ -44,9 +49,21 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/deleteUser/{user}', [AdminController::class, 'deleteUser'])->name('deleteUser');
 
+    Route::get('/logos', [LogosController::class, 'logos'])->name('logos');
+    Route::post('/logos/store', [LogosController::class, 'logosStore'])->name('logos.store');
+    Route::post('/favicon/store', [LogosController::class, 'faviconStore'])->name('favicon.store');
+    Route::post('/logos/removeLogos', [LogosController::class, 'removeLogos'])->name('logos.destroy');
+    Route::post('/favicon/removeFavicon', [LogosController::class, 'removeFavicon'])->name('favicon.destroy');
+
     // resource controller school
     Route::resource('/school', SchoolController::class)->except('show');
 
     // resource controller school
     Route::resource('/academic-year', AcademicYearController::class)->except('show');
+
+    // resource controller major
+    Route::resource('/major', MajorController::class)->except('show');
+
+    // resource controller major
+    Route::resource('/mclass', MclassController::class)->except('show');
 });

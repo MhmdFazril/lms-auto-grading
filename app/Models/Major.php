@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AcademicYear extends Model
+class Major extends Model
 {
-    /** @use HasFactory<\Database\Factories\AcademicYearFactory> */
+    /** @use HasFactory<\Database\Factories\MajorFactory> */
     use HasFactory;
 
     protected $guarded = ['id'];
@@ -15,6 +15,6 @@ class AcademicYear extends Model
 
     public function classes()
     {
-        return $this->belongsTo(Mclass::class);
+        return $this->hasMany(Mclass::class);
     }
 }

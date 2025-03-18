@@ -15,6 +15,7 @@
 
                 <input type="hidden" name="tahun1_old" id="tahun1_old" value="{{ $year->tahun1 }}">
                 <input type="hidden" name="tahun2_old" id="tahun2_old" value="{{ $year->tahun2 }}">
+
                 <div class="collapse collapse-plus bg-base-100 border border-base-300">
                     <input type="checkbox" class="dropdownAcc" checked="checked" />
                     <div class="collapse-title font-semibold text-white bg-grf-primary">Data Tahun Akademik</div>

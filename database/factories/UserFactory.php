@@ -65,7 +65,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'password' => bcrypt('password'), // Default password
             // 'id_school' => rand(1, 10), // Anggap ada 10 sekolah di tabel schools
-            // 'id_major' => rand(1, 5), // Anggap ada 5 jurusan
+            'major_id' => rand(1, 2), // Anggap ada 5 jurusan
             // 'id_class' => rand(1, 15), // Anggap ada 15 kelas
             'tahun_masuk' => $this->faker->year(),
             'tahun_lulus' => $this->faker->year(),

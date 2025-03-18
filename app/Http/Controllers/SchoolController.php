@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class SchoolController
 {
@@ -69,7 +70,13 @@ class SchoolController
      */
     public function edit(School $school)
     {
-        //
+        $data = [
+            'title' => 'Edit School',
+            'script' => 'editSchool_script',
+            'school' => $school,
+        ];
+
+        return view('admin.school.editSchool', $data);
     }
 
     /**
@@ -77,7 +84,39 @@ class SchoolController
      */
     public function update(Request $request, School $school)
     {
-        //
+        $rules = [
+            'email' => 'nullable|string',
+        ];
+
+        if ($request->nama_old !== $request->nama) {
+            $rules['nama'] = 'required|string|max:100|unique:schools,nama';
+        } else {
+            $rules['nama'] = 'required|string|max:100';
+        }
+
+        if ($request->alamat_old !== $request->alamat) {
+            $rules['alamat'] = 'required|string|unique:schools,alamat';
+        } else {
+            $rules['alamat'] = 'required|string';
+        }
+
+        $validateData = $request->validate($rules);
+
+        if ($request->file('gambar')) {
+            if ($request->gambar_old) {
+                Storage::delete($request->gambar_old);
+            }
+            $validateData['gambar'] = $request->file('gambar')->store('image-school');
+        }
+
+        if ($request->remove_image) {
+            Storage::delete($request->gambar_old);
+            $validateData['gambar'] = null;
+        }
+
+        School::where('id', $school->id)->update($validateData);
+
+        return redirect()->route('school.index')->with('successToast', 'Data sekolah berhasil diperbaharui.');
     }
 
     /**

@@ -7,7 +7,7 @@
             <section>
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">General Settings</h2>
                 <div class="ml-4 space-y-2">
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Logos</a>
+                    <a href="{{ route('logos') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Logos</a>
                     <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Site Settings</a>
                 </div>
             </section>
@@ -72,9 +72,12 @@
             <section>
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">Major Management</h2>
                 <div class="ml-4 space-y-2">
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
+                    <a href="{{ route('major.index') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Browse list of
                         major</a>
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new major</a>
+                    <a href="{{ route('major.create') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Add
+                        new major</a>
                     <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Import major</a>
                 </div>
             </section>
@@ -86,9 +89,12 @@
             <section>
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">Class Management</h2>
                 <div class="ml-4 space-y-2">
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Manage class</a>
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new class</a>
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Import class</a>
+                    <a href="{{ route('mclass.index') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Manage class</a>
+                    <a href="{{ route('mclass.create') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Add new class</a>
+                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Import
+                        class</a>
                 </div>
             </section>
         </div>

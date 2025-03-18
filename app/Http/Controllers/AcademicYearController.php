@@ -47,7 +47,7 @@ class AcademicYearController
 
         AcademicYear::create($dataInsert);
 
-        return redirect('/admin/site-admin')->with('successToast', 'Sukses menambahkan tahun akademik');
+        return redirect()->route('academic-year.index')->with('successToast', 'Sukses menambahkan tahun akademik');
     }
 
     /**

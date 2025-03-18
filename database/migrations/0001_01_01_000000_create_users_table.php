@@ -52,13 +52,12 @@ return new class extends Migration
             $table->text('beasiswa')->nullable();
             $table->year('tahun_masuk')->nullable();
 
-            // $table->foreignId('id_school')->nullable()->constrained('schools')->onDelete('set null');
-            // $table->foreignId('id_major')->nullable()->constrained('majors')->onDelete('set null');
-            // $table->foreignId('id_class')->nullable()->constrained('classes')->onDelete('set null');
+            // $table->foreignId('school_id')->nullable()->constrained('schools')->onDelete('set null');
+            // $table->foreignId('major_id')->nullable()->constrained('majors')->onDelete('set null');
 
-            $table->foreignId('id_school')->nullable();
-            $table->foreignId('id_major')->nullable();
-            $table->foreignId('id_class')->nullable();
+            $table->foreignId('school_id')->nullable();
+            $table->foreignId('major_id')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

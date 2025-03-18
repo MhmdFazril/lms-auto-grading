@@ -92,7 +92,8 @@
                                         <i class="fa-solid fa-file-pen text-white"></i>
                                     </a>
                                 @elseif ($user->role == 'student')
-                                    <a href="{{ route(' ', ['user' => $user->nisn]) }}" class="btn bg-blue-700 btn-xs">
+                                    <a href="{{ route('editStudent', ['user' => $user->nisn]) }}"
+                                        class="btn bg-blue-700 btn-xs">
                                         <i class="fa-solid fa-file-pen text-white"></i>
                                     </a>
                                 @endif

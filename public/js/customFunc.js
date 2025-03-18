@@ -36,3 +36,22 @@ function LettersAndNumbers(element) {
         this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
     });
 }
+
+function sendAjax(route, formData) {
+    return new Promise((resolve, reject) => {
+        formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
+        $.ajax({
+            url: route,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                resolve(response); // Mengembalikan hasil sukses
+            },
+            error: function (xhr) {
+                reject(xhr); // Mengembalikan hasil error
+            },
+        });
+    });
+}

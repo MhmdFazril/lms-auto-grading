@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Major;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +36,8 @@ class AdminController
         $data = [
             'title' => 'Add User',
             'script' => 'addStudent_script',
-            'role' => 'Student'
+            'role' => 'Student',
+            'majors' => Major::where('aktif', true)->get(),
         ];
 
         return view('admin.users.addStudent', $data);
@@ -88,7 +90,7 @@ class AdminController
             'password' => 'required|string|min:8',
             'gambar' => 'file|image|max:2048',
 
-            'id_major' => 'required|numeric',
+            'major_id' => 'required|numeric',
             'nis' => 'required|string|max:20|unique:users,nis',
             'nisn' => 'required|string|max:20|unique:users,nisn',
             'nama_wali' => 'required|string|max:100',
