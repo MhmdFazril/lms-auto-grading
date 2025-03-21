@@ -32,7 +32,7 @@
                         @endforeach
                     </select>
                 </div>
-                <h2 class="italic text-center {{ count($students) !== 0 ? 'hidden' : '' }}" id="empty-text">No
+                <h2 class="italic text-center {{ count($students) !== 0 ? 'hidden' : '' }}" id="empty-text2">No
                     available student yet</h2>
                 <table class="table table-zebra table-md table-pin-rows table-pin-cols" id="table-students"
                     style="{{ count($students) == 0 ? 'display: none' : '' }}">
@@ -71,8 +71,8 @@
             <div class="w-20 h-80 bg-gray-100 flex flex-col gap-2 justify-center items-center text-center ">
                 <button class="btn btn-soft btn-info tooltip" onclick="insert()" data-tip="insert" id="insert"><i
                         class="fa-solid fa-arrow-right"></i></button>
-                <button class="btn btn-soft btn-warning tooltip tooltip-bottom" data-tip="remove" id="remove"><i
-                        class="fa-solid fa-arrow-left"></i></button>
+                <button class="btn btn-soft btn-warning tooltip tooltip-bottom" data-tip="remove" id="remove"
+                    onclick="remove()"><i class="fa-solid fa-arrow-left"></i></button>
             </div>
 
             <div class="overflow-auto w-1/2 h-72 p-2">
@@ -94,7 +94,8 @@
                             <tbody>
                                 @foreach ($sclass as $class)
                                     <tr>
-                                        <th><input type="checkbox" class="checkbox" id="student" name="student" />
+                                        <th><input type="checkbox" class="checkbox class-student" id="student"
+                                                data-id="{{ $class->students_id }}" name="student" />
                                         </th>
                                         <td>{{ $class->student->nama }}</td>
                                         <td>{{ $class->major->nama }}</td>

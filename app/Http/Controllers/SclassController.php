@@ -14,7 +14,7 @@ class SclassController
     {
         $students = User::where(['role' => 'student', 'aktif' => true])
             ->whereNotIn('id', Sclass::pluck('students_id'))
-            ->orderBy('nama', 'asc')->orderBy('major_id', 'desc')
+            ->orderBy('nama', 'asc')->orderBy('major_id', 'asc')
             ->get();
 
         $sclass = Sclass::where('mclass_id', $mclass->id)->get();
@@ -69,6 +69,28 @@ class SclassController
             }
         }
 
+        return response()->json([
+            'success' => true,
+            'message' => 'memindahkan ' . $count . ' data',
+        ]);
+    }
+
+    function remove(Request $request)
+    {
+        $id_class = $request->id_class;
+        $students = $request->students;
+        $students = explode(',', $students);
+
+        $count = 0;
+        foreach ($students as $student) {
+
+            $where = ['students_id' => $student, 'mclass_id' => $id_class];
+            $delete = Sclass::where($where)->delete();
+
+            if ($delete) {
+                $count++;
+            }
+        }
         return response()->json([
             'success' => true,
             'message' => 'memindahkan ' . $count . ' data',

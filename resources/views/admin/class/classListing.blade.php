@@ -13,7 +13,7 @@
                         <th><input type="checkbox" class="checkbox" /></th>
                         <th>Kelas</th>
                         <th>Wali Kelas</th>
-                        <th>Jml Siswa</th>
+                        <th>Jumlah Siswa</th>
                         <th>Deskripsi</th>
                         <th>Aktif</th>
                         <th>Actions</th>

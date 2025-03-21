@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/sclass/{mclass}', [SclassController::class, 'index'])->name('sclass.index');
     Route::post('/sclass/insert', [SclassController::class, 'insert'])->name('sclass.insert');
+    Route::post('/sclass/remove', [SclassController::class, 'remove'])->name('sclass.remove');
     Route::post('/sclass/filter', [SclassController::class, 'filter'])->name('sclass.filter');
     Route::post('/sclass/saveTeacher', [SclassController::class, 'saveTeacher'])->name('sclass.saveTeacher');
 });
