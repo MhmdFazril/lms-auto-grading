@@ -55,3 +55,17 @@ function sendAjax(route, formData) {
         });
     });
 }
+
+function loading() {
+    $.LoadingOverlay("show", {
+        // image: "",
+        // text: "Harap tunggu...",
+        // fontawesome: "fa fa-cog fa-spin",
+        textColor: "#fff",
+        background: "rgba(0, 0, 0, 0.1)",
+    });
+}
+
+function unloading() {
+    $.LoadingOverlay("hide");
+}

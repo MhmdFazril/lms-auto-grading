@@ -11,15 +11,15 @@ class Mclass extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    // protected $with = ['majors', 'academic_years'];
+    protected $with = ['teacher', 'sclass'];
 
-    // public function major()
-    // {
-    //     return $this->belongsTo(Major::class);
-    // }
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
 
-    // public function academic_year()
-    // {
-    //     return $this->belongsTo(AcademicYear::class);
-    // }
+    public function sclass()
+    {
+        return $this->hasMany(Sclass::class);
+    }
 }

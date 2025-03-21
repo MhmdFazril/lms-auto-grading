@@ -9,7 +9,9 @@ use App\Http\Controllers\LogosController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MclassController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SclassController;
 use App\Models\Academic_Year;
+use App\Models\Sclass;
 use Illuminate\Support\Facades\Route;
 use PhpParser\Builder\ClassConst;
 use Psy\Command\ListCommand\ClassConstantEnumerator;
@@ -66,4 +68,10 @@ Route::prefix('admin')->group(function () {
 
     // resource controller major
     Route::resource('/mclass', MclassController::class)->except('show');
+
+
+    Route::get('/sclass/{mclass}', [SclassController::class, 'index'])->name('sclass.index');
+    Route::post('/sclass/insert', [SclassController::class, 'insert'])->name('sclass.insert');
+    Route::post('/sclass/filter', [SclassController::class, 'filter'])->name('sclass.filter');
+    Route::post('/sclass/saveTeacher', [SclassController::class, 'saveTeacher'])->name('sclass.saveTeacher');
 });

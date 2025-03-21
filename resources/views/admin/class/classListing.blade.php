@@ -12,6 +12,8 @@
                     <tr>
                         <th><input type="checkbox" class="checkbox" /></th>
                         <th>Kelas</th>
+                        <th>Wali Kelas</th>
+                        <th>Jml Siswa</th>
                         <th>Deskripsi</th>
                         <th>Aktif</th>
                         <th>Actions</th>
@@ -22,6 +24,8 @@
                         <tr>
                             <th><input type="checkbox" class="checkbox" /></th>
                             <td>{{ $class->nama }}</td>
+                            <td>{{ $class->teacher->nama ?? '-' }}</td>
+                            <td>{{ $class->sclass->count() }}</td>
                             <td>{{ $class->deskripsi }}</td>
                             <td>
                                 @if ($class->aktif == '1')
@@ -31,7 +35,8 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="#" class="btn bg-blue-700 btn-xs">
+                                <a href="{{ route('sclass.index', ['mclass' => $class->id]) }}"
+                                    class="btn bg-blue-700 btn-xs">
                                     <i class="fa-solid fa-users text-white"></i>
                                 </a>
                                 <a href="{{ route('mclass.edit', ['mclass' => $class->id]) }}"

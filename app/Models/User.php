@@ -24,6 +24,7 @@ class User extends Authenticatable
     // ];
 
     protected $guarded = ['id'];
+    protected $with = ['major'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
     }
 }

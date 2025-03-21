@@ -18,6 +18,8 @@ class MclassController
             'classes' => Mclass::all(),
         ];
 
+        // dd($data['classes']);
+
         return view('admin.class.classListing', $data);
     }
 

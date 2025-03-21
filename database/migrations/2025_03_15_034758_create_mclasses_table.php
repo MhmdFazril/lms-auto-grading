@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('mclasses', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 50);
+            $table->foreignId('teacher_id')->nullable();
             $table->text('deskripsi')->nullable();
             // $table->foreignId('major_id')->nullable()->constrained()->onDelete('set null');
             // $table->foreignId('academic_year_id')->nullable()->constrained()->onDelete('set null');
