@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
+            $table->string('nama', 100)->unique();
             $table->text('deskripsi')->nullable();
             $table->foreignId('teacher_id', 2);
             $table->foreignId('academic_year_id', 2);
+            $table->foreignId('major_id', 2);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->string('enrollment_key', 10)->nullable();
+            $table->dateTime('start_enroll')->nullable();
+            $table->dateTime('end_enroll')->nullable();
+            $table->text('gambar', 2);
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

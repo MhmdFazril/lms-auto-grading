@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('nip', 20)->unique()->nullable();
             $table->enum('pernikahan', ['yes', 'no', 'lainnya'])->default('no');
             $table->string('pendidikan', 20)->nullable();
-            $table->string('prodi', 20)->nullable();
+            $table->string('prodi', 100)->nullable();
             $table->string('lembaga_pendidikan', 50)->nullable();
             $table->year('tahun_lulus')->nullable();
 

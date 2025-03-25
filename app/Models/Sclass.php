@@ -11,7 +11,7 @@ class Sclass extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $with = ['student', 'major'];
+    protected $with = ['student', 'major', 'mclass'];
 
     public function student()
     {
@@ -21,6 +21,11 @@ class Sclass extends Model
     public function major()
     {
         return $this->belongsTo(Major::class);
+    }
+
+    public function mclass()
+    {
+        return $this->belongsTo(Mclass::class);
     }
 
     public static function getNourut($mclass)

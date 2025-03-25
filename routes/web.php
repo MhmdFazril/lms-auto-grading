@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LogosController;
@@ -75,4 +76,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/sclass/remove', [SclassController::class, 'remove'])->name('sclass.remove');
     Route::post('/sclass/filter', [SclassController::class, 'filter'])->name('sclass.filter');
     Route::post('/sclass/saveTeacher', [SclassController::class, 'saveTeacher'])->name('sclass.saveTeacher');
+
+    // resource controller course
+    Route::resource('/course', CourseController::class)->except('show');
+    Route::post('/course/getParticipant', [CourseController::class, 'getParticipant'])->name('course.getParticipant');
+    Route::post('/course/saveParticipant', [CourseController::class, 'saveParticipant'])->name('course.saveParticipant');
 });
