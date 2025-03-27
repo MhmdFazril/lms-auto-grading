@@ -12,58 +12,85 @@
             <h1 class="text-2xl font-bold">Question</h1>
 
             <!-- Tombol Tambah Soal -->
-            <button class="btn btn-info text-white">+ Tambah Soal</button>
+            <div>
+                <button class="btn btn-accent text-white">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>Import Soal
+                </button>
+                <button class="btn btn-info text-white" onclick="question_modal.showModal()">+ Tambah Soal</button>
+            </div>
         </section>
 
-        <!-- List Soal -->
-        <div class="space-y-4">
-            <div class="card bg-base-100 shadow-md p-4">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="font-semibold">1. Contoh soal pertama</p>
-                        <p class="text-sm text-gray-500">Tipe: Pilihan Ganda</p>
+        <input type="hidden" name="course_id" id="course_id" value="{{ $course->id }}">
+        <input type="hidden" name="content_id" id="content_id" value="{{ $content->id }}">
+
+        @if ($question->count() == 0)
+            <h2 class="text-lg italic font-light p-3">No question available yet</h2>
+        @else
+            @foreach ($question as $question)
+                <div class="space-y-4">
+                    <div class="card bg-base-100 shadow-md p-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold">{!! $question->question_text !!}</p>
+                                <p class="text-sm text-gray-500">Tipe: {{ $question->question_type }}</p>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="{{ route('course.content.edit-question', ['course' => $course->id, 'courseContents' => $content->id, 'quizQuestion' => $question->id, 'question_type' => $question->question_type]) }}"
+                                    class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil text-gray-50"></i></a>
+
+                                <a href="{{ route('course.content.delete-question', ['course' => $course->id, 'courseContents' => $content->id, 'question' => $question->id]) }}"
+                                    class="btn btn-sm btn-error"><i class="fa-solid fa-trash text-gray-50"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex space-x-2">
-                        <button class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil text-gray-50"></i></button>
-                        <button class="btn btn-sm btn-error"><i class="fa-solid fa-trash text-gray-50"></i></button>
-                    </div>
+                </div>
+            @endforeach
+        @endif
+    </div>
+
+    <dialog id="question_modal" class="modal">
+        <div class="modal-box p-0 max-w-lg min-h-10/12">
+            <h3 class="text-lg font-bold p-5">Add question type</h3>
+
+            <div class="grid grid-cols-2 mt-4 ">
+                <div class="bg-slate-200 p-3 space-y-4" id="section-question">
+                    <section class="space-x-2">
+                        <input type="radio" checked name="question_type" class="question_type" value="multiple"
+                            id="multiple">
+                        <label for="multiple">
+                            <i class="fa-solid fa-list"></i>
+                            <span>Multiple choose</span>
+                        </label>
+                    </section>
+
+                    <section class="space-x-2">
+                        <input type="radio" name="question_type" class="question_type" value="essay" id="essay">
+                        <label for="essay">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span>Essay</span>
+                        </label>
+                    </section>
+                </div>
+
+                <div class="p-3" id="section-deskripsi">
+                    <section id="multiple">
+                        Allows the selection of a single or multiple responses from a pre-defined list.
+                    </section>
+                    <section id="essay" class="hidden">
+                        Allows a response of a file upload and/or online text. This must then be graded manually.
+                    </section>
                 </div>
             </div>
 
-            {{-- <div class="card bg-base-100 shadow-md p-4">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="font-semibold">2. Contoh soal kedua</p>
-                        <p class="text-sm text-gray-500">Tipe: Esai</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button class="btn btn-sm btn-warning">Edit</button>
-                        <button class="btn btn-sm btn-error">Hapus</button>
-                    </div>
-                </div>
-            </div> --}}
-        </div>
-    </div>
+            <div class="modal-action absolute bottom-3 right-3">
+                <form method="dialog">
+                    <button class="btn btn-info text-white">Close</button>
+                    <button class="btn btn-accent text-white">Add</button>
+                </form>
+            </div>
 
-    <!-- Modal Tambah Soal -->
-    <dialog id="modal-add-question" class="modal">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">Tambah Soal</h3>
-
-            <form>
-                <!-- Input Pertanyaan -->
-                <div class="mb-2">
-                    <label class="block font-semibold">Pertanyaan</label>
-                    <textarea class="textarea textarea-bordered w-full"></textarea>
-                </div>
-
-                <!-- Tombol Simpan -->
-                <div class="mt-4 flex space-x-2">
-                    <button class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn"
-                        onclick="document.getElementById('modal-add-question').close()">Batal</button>
-                </div>
-            </form>
+            <span class="hidden" id="sect_id"></span>
+            <span class="hidden" id="course_id"></span>
         </div>
     </dialog>
 @endsection

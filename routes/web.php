@@ -11,9 +11,11 @@ use App\Http\Controllers\LogosController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MclassController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SclassController;
 use App\Models\CourseContents;
+use App\Models\QuizQuestion;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -99,4 +101,12 @@ Route::prefix('admin')->group(function () {
     Route::post('/content/update/{course}/{courseContents}', [CourseContentsController::class, 'updateContent'])->name('course.content.update-content');
 
     Route::get('/content/show/{course}/{courseContents}/{tipe}', [CourseContentsController::class, 'showContent'])->name('course.content.show-content');
+
+    Route::get('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'createQuestion'])->name('course.content.create-question');
+    Route::post('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'storeQuestion'])->name('course.content.store-question');
+
+    Route::get('/content/editQuestion/{course}/{courseContents}/{quizQuestion}/{question_type}', [QuizQuestionController::class, 'editQuestion'])->name('course.content.edit-question');
+    Route::post('/content/editQuestion/{course}/{courseContents}/{quizQuestion}/{question_type}', [QuizQuestionController::class, 'updateQuestion'])->name('course.content.update-question');
+
+    Route::get('/content/deleteQuestion/{course}/{courseContents}/{question}', [QuizQuestionController::class, 'deleteQuestion'])->name('course.content.delete-question');
 });

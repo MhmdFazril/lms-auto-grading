@@ -11,9 +11,14 @@ class CourseContents extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
+    protected $with = ['quiz_question'];
     public function section()
     {
         return $this->belongsTo(CourseContents::class);
+    }
+
+    public function quiz_question()
+    {
+        return $this->hasMany(QuizQuestion::class, 'course_content_id');
     }
 }

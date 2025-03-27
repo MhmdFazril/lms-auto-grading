@@ -10,6 +10,7 @@ use App\Models\School;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Sclass;
 use App\Models\AcademicYear;
+use App\Models\CourseContents;
 use App\Models\CourseSections;
 use Illuminate\Database\Seeder;
 
@@ -344,6 +345,17 @@ class DatabaseSeeder extends Seeder
         CourseSections::create([
             'course_id' => '2',
             'nama' => 'section 3',
+        ]);
+
+        CourseContents::create([
+            'course_id' => '1',
+            'course_sections_id' => '1',
+            'nama' => 'Ulangan harian',
+            'content_type' => 'quiz',
+            'open_quiz' => '2025-03-27 01:39:00',
+            'close_quiz' => '2025-03-28 01:39:00',
+            'time_limit' => '20',
+            'satuan' => 'menit',
         ]);
     }
 }

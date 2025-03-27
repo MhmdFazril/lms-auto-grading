@@ -2,4 +2,9 @@ hapus section		| done
 tambah section		| done
 hapus quiz          | done
 edit quiz           | done
-read quiz (soal)
+read quiz (soal)    | done
+
+tambah soal         | done
+tampilkan soal      | done
+edit soal           | done
+delete soal         | done
