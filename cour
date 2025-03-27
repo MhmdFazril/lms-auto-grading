@@ -1,0 +1,11 @@
+[33me5468a4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m make a course feature and the participant of corse
+[33m66e6aae[m[33m ([m[1;31morigin/main[m[33m)[m complete management class feature
+[33md2d29f0[m feature of adding student into class using sclasses table
+[33m08e7671[m make feature of major, master_class, student_class and logos
+[33m32a1a40[m recreate crud for user student and teacher
+[33m9bc9df1[m make a master school and academic year schema migration and the crud
+[33m80bf47c[m new layout input teacher and student and new schema users table
+[33m6c0f715[m make a site administration and insert user teacher
+[33m97b47b4[m make login page, index and dashboard, and site administration menu
+[33m593119c[m using Jquery, daisyui, toastr, fontawesome into project
+[33mda16580[m initial setup laravel

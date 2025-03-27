@@ -23,7 +23,7 @@
                 @foreach ($courses as $course)
                     <div class="card bg-white shadow-sm border border-gray-100 hover:shadow-xl transition">
                         <figure class="max-h-36">
-                            <a href="#">
+                            <a href="{{ route('course.show', ['course' => $course->id]) }}">
                                 <img src="{{ asset($course->gambar) }}" alt="{{ $course->nama }}" />
                             </a>
                         </figure>
@@ -31,7 +31,7 @@
                             <span
                                 class="text-xs font-light">{{ $course->academic->tahun1 . '/' . $course->academic->tahun2 }}</span>
                             <h2 class="card-title">
-                                <a href="#">{{ $course->nama }}</a>
+                                <a href="{{ route('course.show', ['course' => $course->id]) }}">{{ $course->nama }}</a>
                             </h2>
                             <p>{!! $course->deskripsi !!}</p>
                             <div class="card-actions justify-end">
@@ -73,7 +73,6 @@
                     @foreach ($majors as $major)
                         <option value="{{ $major->id }}">{{ $major->nama }}</option>
                     @endforeach
-                    <!-- Tambahkan opsi jurusan lainnya sesuai kebutuhan -->
                 </select>
             </div>
 

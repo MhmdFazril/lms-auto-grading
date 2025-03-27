@@ -11,4 +11,14 @@ class CourseSections extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function contents()
+    {
+        return $this->hasMany(CourseContents::class);
+    }
+
+    // public function quizzes()
+    // {
+    //     return $this->hasMany(Quiz::class);
+    // }
 }

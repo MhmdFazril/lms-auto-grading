@@ -75,10 +75,10 @@ class CourseController
         $courseInsert = Course::create($validateData);
 
         if ($courseInsert) {
-            for ($i = 1; $i <= $jmlSection; $i++) {
+            for ($i = 0; $i <= $jmlSection; $i++) {
                 CourseSections::create([
                     'course_id' => $courseInsert->id,
-                    'nama' => 'section ' . $i,
+                    'nama' => $i == 0 ? 'Information' : 'section ' . $i,
                     'posisi' => $i,
                 ]);
             }
@@ -92,8 +92,16 @@ class CourseController
      */
     public function show(Course $course)
     {
-        //
+        $data = [
+            'title' => ucwords(strtolower($course->nama)),
+            'script' => 'showCourse_script',
+            'sections' => CourseSections::with('contents')->where('course_id', $course->id)->get(),
+            'course' => $course,
+        ];
+
+        return view('admin.course.showCourse', $data);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -171,7 +179,6 @@ class CourseController
     }
 
 
-
     public function getParticipant(Request $request)
     {
         if ($request->filter == 'all') {
@@ -203,22 +210,6 @@ class CourseController
         ]);
     }
 
-    // public function saveParticipant(Request $request)
-    // {
-    //     dd($request);
-
-    //     $item = explode(',', $request->item);
-    //     foreach ($item as $val) {
-    //         CourseEnrollment::create([
-    //             'course_id' => $request->course_id,
-    //             'student_id' => $val,
-    //         ]);
-    //     }
-    //     return response()->json([
-    //         'success' => true,
-    //     ]);
-    // }
-
     public function saveParticipant(Request $request)
     {
         $item = explode(',', $request->item);
@@ -249,5 +240,102 @@ class CourseController
             'success' => true,
             'selectedItem' => $selectedItem,
         ]);
+    }
+
+
+    public function editSetting(Course $course, CourseSections $courseSection)
+    {
+        $data = [
+            'title' => 'Setting ' . strtolower($course->nama) . ' section',
+            'section' => $courseSection,
+            'course_id' => $course->id,
+        ];
+
+        return view('admin.course.editSection', $data);
+    }
+
+    public function editSettingPost(Course $course, CourseSections $courseSection, Request $request)
+    {
+        $validateData = $request->validate([
+            'nama' => 'required|max:100|string',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        $update = CourseSections::where('id', $courseSection->id)->update($validateData);
+
+        if ($update) {
+            return redirect()->route('course.show', ['course' => $course->id])->with('successToast', 'Berhasil update section');
+        } else {
+            return redirect()->route('course.show', ['course' => $course->id])->with('errorToast', 'Kesalahan sistem. Gagal update section');
+        }
+    }
+
+    public function addSetting(Course $course)
+    {
+        $data = [
+            'title' => 'Add section',
+            'course_id' => $course->id,
+        ];
+
+        return view('admin.course.addSection', $data);
+    }
+
+    public function addSettingPost(Course $course, Request $request)
+    {
+        $validateData = $request->validate([
+            'nama' => 'required|max:100|string',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        $validateData['course_id'] = $course->id;
+        $insert = CourseSections::create($validateData);
+
+        if ($insert) {
+            return redirect()->route('course.show', ['course' => $course->id])->with('successToast', 'Berhasil menambah section');
+        } else {
+            return redirect()->route('course.show', ['course' => $course->id])->with('errorToast', 'Kesalahan sistem. Gagal menambah section');
+        }
+    }
+
+    public function visibilitySections(Request $request)
+    {
+        $show = CourseSections::where('id', $request->section_id)->update(['show' => $request->show]);
+
+        return response()->json([
+            'success' => $show,
+        ]);
+    }
+
+    public function updateSection(Request $request)
+    {
+        $show = CourseSections::where('id', $request->section_id)->update(['nama' => $request->new_text]);
+
+        return response()->json([
+            'success' => $show,
+        ]);
+    }
+
+    public function deleteSection(Course $course, CourseSections $courseSection,)
+    {
+        $delete = CourseSections::destroy($courseSection->id);
+
+        if ($delete) {
+            return redirect()->route('course.show', ['course' => $course->id])->with('successToast', 'Berhasil menghapus section');
+        } else {
+            return redirect()->route('course.show', ['course' => $course->id])->with('errorToast', 'Gagal menghapus section');
+        }
+    }
+
+
+    public function addContent(Course $course, CourseSections $courseSection, $tipe)
+    {
+        $data = [
+            'title' => 'add ' . $tipe,
+            'script' => 'addContent' . $tipe . '_script',
+            'course' => $course,
+            'courseSection' => $courseSection,
+        ];
+
+        return view('admin.course.addContent-' . $tipe, $data);
     }
 }

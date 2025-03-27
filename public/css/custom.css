@@ -56,3 +56,14 @@ table.dataTable tbody .odd-row {
     margin-left: 0.3em;
     padding-left: 0.6em;
 }
+
+.course-section-contents {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.course-section-contents:hover {
+    border: 1px solid #006db7;
+    border-radius: 10px;
+}

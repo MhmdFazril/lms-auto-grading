@@ -1,6 +1,10 @@
-<div class="navbar shadow-sm bg-grf-primary">
+{{-- <div class="navbar shadow-sm bg-grf-primary"> --}}
+<div
+    class="w-full flex items-center {{ Route::currentRouteName() == 'course.show' ? 'p-2' : 'p-4' }} shadow-sm bg-grf-primary">
     <div class="flex-1">
-        <p class="text-2xl md:text-3xl ml-3 font-audiowide text-white">E-Learning Grafika YL</p>
+        <p
+            class="text-2xl md:text-3xl ml-3 font-audiowide text-white {{ Route::currentRouteName() == 'course.show' ? 'hidden' : '' }}">
+            E-Learning Grafika YL</p>
     </div>
 
     @if (Route::currentRouteName() == 'index')
@@ -16,6 +20,7 @@
             <i class="fa-solid fa-circle-user text-slate-100 text-2xl"></i>
             <i class="fa-solid fa-chevron-down text-slate-100 text-sm"></i>
         </div>
+
         <ul tabindex="0" class="menu dropdown-content bg-grf-primary rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
             <li>
                 <a href="#" class="text-slate-100"><i class="fa-solid fa-circle-user"></i> Profile</a>
@@ -29,7 +34,15 @@
     {{-- @endif --}}
 </div>
 
-@if (Route::currentRouteName() == 'dashboard' || Route::currentRouteName() == 'site-admin')
+<div
+    class="navbar shadow-sm bg-grf-primary {{ Route::currentRouteName() != 'course.show' ? 'hidden' : 'hidden sm:block' }} border border-t-slate-300 ">
+    <h1 class="text-3xl md:text-4xl ml-3 font-audiowide text-white">
+        {{ $title }}</h1>
+</div>
+
+@if (Route::currentRouteName() == 'dashboard' ||
+        Route::currentRouteName() == 'site-admin' ||
+        Route::currentRouteName() == 'course.show')
     <div class="border-b-2 border-b-grf-primary flex space-x-4 overflow-auto">
         <a href="{{ route('dashboard') }}" class="p-3 hover:bg-grf-primary group ">
             <section class="group-hover:text-white"><i class="fa-solid fa-house"></i> Home</section>
