@@ -22,4 +22,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseSections::class);
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
 }

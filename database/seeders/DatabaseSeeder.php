@@ -13,6 +13,7 @@ use App\Models\AcademicYear;
 use App\Models\CourseContents;
 use App\Models\CourseSections;
 use Illuminate\Database\Seeder;
+use App\Models\CourseEnrollment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -315,6 +316,26 @@ class DatabaseSeeder extends Seeder
             'start_date' => '2025-03-12 20:00:00',
             'end_date' => '2026-03-12 20:00:00',
             'gambar' => 'asset/background_course' . rand(2, 7) . '.jpg'
+        ]);
+
+        CourseEnrollment::create([
+            'course_id' => '1',
+            'student_id' => '1',
+        ]);
+
+        CourseEnrollment::create([
+            'course_id' => '1',
+            'student_id' => '2',
+        ]);
+
+        CourseEnrollment::create([
+            'course_id' => '2',
+            'student_id' => '1',
+        ]);
+
+        CourseEnrollment::create([
+            'course_id' => '2',
+            'student_id' => '2',
         ]);
 
         CourseSections::create([
