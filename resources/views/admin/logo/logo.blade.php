@@ -47,7 +47,6 @@
 
             <div class="flex justify-end gap-3 mt-5">
                 <a href="{{ route('site-admin') }}" class="btn btn-info text-white"><i class="fa-solid fa-xmark"></i></a>
-                <button type="submit" class="btn btn-success text-white"><i class="fa-solid fa-floppy-disk"></i></button>
             </div>
         </div>
     </div>

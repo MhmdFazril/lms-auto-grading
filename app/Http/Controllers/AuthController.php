@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logos;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,14 +14,22 @@ class AuthController
         $data = [
             'title' => 'Login Page',
             'script' => 'login_script',
+            'logo' => Logos::where('file', 'like', '%logos%')->first(),
         ];
+
         return view('auth.login', $data);
     }
 
 
     function auth(Request $request)
     {
-        $user = User::where('email', $request->nomor)
+        $rules = [
+            'nomor' => 'required',
+            'password' => 'required'
+        ];
+        $request->validate($rules);
+
+        $user = User::where('kode_admin', $request->nomor)
             ->orWhere('nis', $request->nomor)
             ->orWhere('nip', $request->nomor)
             ->first();

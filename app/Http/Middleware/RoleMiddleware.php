@@ -14,10 +14,11 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
+        $userRole = strtolower(Auth::user()->role);
 
-        if (strtolower(Auth::user()->role) != strtolower($role)) {
+        if (!in_array($userRole, array_map('strtolower', $roles))) {
             abort(403, 'Akses dibatasi');
         }
 

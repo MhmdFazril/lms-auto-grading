@@ -31,7 +31,7 @@
                     <div class="card bg-base-100 shadow-md p-4">
                         <div class="flex justify-between items-center">
                             <div>
-                                <p class="font-semibold">{!! $question->question_text !!}</p>
+                                <p class="font-semibold">{{ strip_tags($question->question_text) }}</p>
                                 <p class="text-sm text-gray-500">Tipe: {{ $question->question_type }}</p>
                             </div>
                             <div class="flex space-x-2">

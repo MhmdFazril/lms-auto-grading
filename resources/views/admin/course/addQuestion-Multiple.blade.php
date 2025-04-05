@@ -26,6 +26,16 @@
                             @enderror
                         </div>
 
+                        <div>
+                            <label class="block mb-1">Bobot soal (0-100) <x-tooltip message="required" /></label>
+                            <input type="text" class="input w-2/12" onkeyup="onlyNumbers(this)" placeholder="Type here"
+                                name="bobot" value="{{ old('bobot') }}" autocomplete="off" maxlength="3"
+                                id="bobot" />
+                            @error('bobot')
+                                <p class="mt-2 text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 1 </label>
                             <input id="opsi1" type="hidden" name="opsi1" value="{{ old('opsi1') }}">

@@ -14,6 +14,7 @@ use App\Models\CourseContents;
 use App\Models\CourseSections;
 use Illuminate\Database\Seeder;
 use App\Models\CourseEnrollment;
+use App\Models\QuizQuestion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -45,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '081234567890',
             'wa' => '081234567890',
             'email' => 'ahmad.taufik@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'student',
             'nis' => '1234567890',
             'nisn' => '9876543210',
@@ -72,7 +73,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '082345678901',
             'wa' => '082345678901',
             'email' => 'nadia.putri@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'student',
             'nis' => '1234567891',
             'nisn' => '9876543211',
@@ -99,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '083456789012',
             'wa' => '083456789012',
             'email' => 'firman.nugroho@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'student',
             'nis' => '1234567892',
             'nisn' => '9876543212',
@@ -126,7 +127,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '084567890123',
             'wa' => '084567890123',
             'email' => 'ella.prastiw@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'student',
             'nis' => '1234567893',
             'nisn' => '9876543213',
@@ -154,7 +155,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '085678901234',
             'wa' => '085678901234',
             'email' => 'alif.hariyadi@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'teacher',
             'nip' => 'NIP123456789',
             'pernikahan' => 'yes',
@@ -175,7 +176,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '085789012345',
             'wa' => '085789012345',
             'email' => 'rina.sari@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'teacher',
             'nip' => 'NIP987654321',
             'pernikahan' => 'no',
@@ -196,7 +197,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '087678901234',
             'wa' => '087678901234',
             'email' => 'martinus.wahyudi@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'teacher',
             'nip' => 'NIP567891234',
             'pernikahan' => 'yes',
@@ -217,7 +218,7 @@ class DatabaseSeeder extends Seeder
             'telp' => '085123456789',
             'wa' => '085123456789',
             'email' => 'lina.sukmawati@mail.com',
-            'password' => bcrypt('password123'),
+            'password' => bcrypt('123123'),
             'role' => 'teacher',
             'nip' => 'NIP246801357',
             'pernikahan' => 'no',
@@ -227,6 +228,15 @@ class DatabaseSeeder extends Seeder
             'tahun_lulus' => '2003',
             'school_id' => 1,  // Asumsi sudah ada data di tabel sekolah
             'major_id' => 1,   // Asumsi sudah ada data di tabel major
+        ]);
+
+        //user admin
+        User::create([
+            'nama' => 'MAS ADMIN ',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('admin123'),
+            'role' => 'admin',
+            'kode_admin' => 'admin123'
         ]);
 
         School::create([
@@ -377,6 +387,70 @@ class DatabaseSeeder extends Seeder
             'close_quiz' => '2025-03-28 01:39:00',
             'time_limit' => '20',
             'satuan' => 'menit',
+        ]);
+
+        QuizQuestion::create([
+            'course_content_id' => '1',
+            'question_text' => 'Sebutkan cabang lomba olahraga atletik',
+            'question_type' => 'multiple',
+            'option' => [
+                'a' => 'lompat jauh',
+                'b' => 'sepak bola',
+                'c' => 'bola voli',
+                'd' => 'bola bekel'
+            ],
+            'correct_answer' => 'a',
+            'bobot' => '20',
+        ]);
+
+        QuizQuestion::create([
+            'course_content_id' => '1',
+            'question_text' => 'Siapakah pelari tercepat di dunia saat ini?',
+            'question_type' => 'multiple',
+            'option' => [
+                'a' => 'Usain Bolt',
+                'b' => 'Tyson Gay',
+                'c' => 'Michael Johnson',
+                'd' => 'Carl Lewis'
+            ],
+            'correct_answer' => 'a',
+            'bobot' => '20',
+        ]);
+
+        QuizQuestion::create([
+            'course_content_id' => '1',
+            'question_text' => 'Apa yang dimaksud dengan cabang olahraga atletik?',
+            'question_type' => 'multiple',
+            'option' => [
+                'a' => 'Olahraga yang melibatkan lari, lompat, dan lempar',
+                'b' => 'Olahraga permainan bola',
+                'c' => 'Olahraga yang melibatkan pertarungan fisik',
+                'd' => 'Olahraga dengan menggunakan alat musik'
+            ],
+            'correct_answer' => 'a',
+            'bobot' => '20',
+        ]);
+
+        QuizQuestion::create([
+            'course_content_id' => '1',
+            'question_text' => 'Berapa panjang lintasan lari dalam lomba lari 100 meter?',
+            'question_type' => 'multiple',
+            'option' => [
+                'a' => '100 meter',
+                'b' => '150 meter',
+                'c' => '200 meter',
+                'd' => '400 meter'
+            ],
+            'correct_answer' => 'a',
+            'bobot' => '20',
+        ]);
+
+        QuizQuestion::create([
+            'course_content_id' => '1',
+            'question_text' => 'Jelaskan apa itu kebugaran jasmani?',
+            'question_type' => 'essay',
+            'correct_answer' => 'kebugaran jasmani adalah jasmani yang bugar',
+            'bobot' => '20',
         ]);
     }
 }

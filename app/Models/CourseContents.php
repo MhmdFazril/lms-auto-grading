@@ -12,9 +12,15 @@ class CourseContents extends Model
 
     protected $guarded = ['id'];
     protected $with = ['quiz_question'];
+
     public function section()
     {
         return $this->belongsTo(CourseContents::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 
     public function quiz_question()

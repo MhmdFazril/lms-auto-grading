@@ -72,7 +72,6 @@
             @endif
         </ul>
 
-
         @if (auth()->user()->role == 'admin')
             <a href="{{ route('site-admin') }}" class="p-3 hover:bg-grf-primary group ">
                 <section class="group-hover:text-white"><i class="fa-solid fa-user-tie"></i> Site

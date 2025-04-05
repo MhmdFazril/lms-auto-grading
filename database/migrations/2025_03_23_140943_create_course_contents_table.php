@@ -23,8 +23,8 @@ return new class extends Migration
             $table->dateTime('close_quiz')->nullable();
             $table->integer('time_limit')->nullable();
             $table->enum('satuan', ['menit', 'detik', 'jam'])->default('menit')->nullable();
-            $table->boolean('shuffle')->nullable();
-            $table->integer('max_attempt')->nullable();
+            $table->boolean('shuffle')->default(false);
+            $table->integer('max_attempt')->default(1)->nullable();
             $table->timestamps();
         });
     }

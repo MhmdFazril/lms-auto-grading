@@ -13,55 +13,73 @@ class QuizQuestionController
     {
         $data = [
             'title' => 'add Question',
-            'script' => 'addQuestion_script',
+            'script' => 'addQuestion' . ucfirst($question_type) . '_script',
             'course_id' => $course->id,
             'content_id' => $courseContents->id,
             'question_type' => $question_type,
         ];
 
-        return view('admin.course.addQuestion', $data);
+        return view('admin.course.addQuestion-' . ucfirst($question_type), $data);
     }
 
 
     public function storeQuestion(Course $course, CourseContents $courseContents, $question_type, Request $request)
     {
-        $validatedData = $request->validate([
-            'question_text' => 'required|string',
-            'opsi1' => 'nullable|string',
-            'opsi2' => 'nullable|string',
-            'opsi3' => 'nullable|string',
-            'opsi4' => 'nullable|string',
-            'opsi5' => 'nullable|string',
+        if ($question_type == 'multiple') {
 
-            'correct_answer' => ['required', function ($attribute, $value, $fail) use ($request) {
-                $validAnswers = [];
-                if ($request->has('opsi1')) $validAnswers[] = 'a';
-                if ($request->has('opsi2')) $validAnswers[] = 'b';
-                if ($request->has('opsi3')) $validAnswers[] = 'c';
-                if ($request->has('opsi4')) $validAnswers[] = 'd';
-                if ($request->has('opsi5')) $validAnswers[] = 'e';
+            $validatedData = $request->validate([
+                'question_text' => 'required|string',
+                'bobot' => 'required|integer',
+                'opsi1' => 'nullable|string',
+                'opsi2' => 'nullable|string',
+                'opsi3' => 'nullable|string',
+                'opsi4' => 'nullable|string',
+                'opsi5' => 'nullable|string',
 
-                if (!in_array($value, $validAnswers)) {
-                    $fail('Jawaban benar harus sesuai dengan opsi yang diisi.');
-                }
-            }],
-        ]);
+                'correct_answer' => ['required', function ($attribute, $value, $fail) use ($request) {
+                    $validAnswers = [];
+                    if ($request->has('opsi1')) $validAnswers[] = 'a';
+                    if ($request->has('opsi2')) $validAnswers[] = 'b';
+                    if ($request->has('opsi3')) $validAnswers[] = 'c';
+                    if ($request->has('opsi4')) $validAnswers[] = 'd';
+                    if ($request->has('opsi5')) $validAnswers[] = 'e';
 
+                    if (!in_array($value, $validAnswers)) {
+                        $fail('Jawaban benar harus sesuai dengan opsi yang diisi.');
+                    }
+                }],
+            ]);
 
-        $options = [];
-        if ($request->has('opsi1')) $options['a'] = $request->opsi1;
-        if ($request->has('opsi2')) $options['b'] = $request->opsi2;
-        if ($request->has('opsi3')) $options['c'] = $request->opsi3;
-        if ($request->has('opsi4')) $options['d'] = $request->opsi4;
-        if ($request->has('opsi5')) $options['e'] = $request->opsi5;
+            $options = [];
+            if ($request->has('opsi1')) $options['a'] = $request->opsi1;
+            if ($request->has('opsi2')) $options['b'] = $request->opsi2;
+            if ($request->has('opsi3')) $options['c'] = $request->opsi3;
+            if ($request->has('opsi4')) $options['d'] = $request->opsi4;
+            if ($request->has('opsi5')) $options['e'] = $request->opsi5;
 
-        $dataInsert = [
-            'course_content_id' => $courseContents->id,
-            'question_text' => $validatedData['question_text'],
-            'question_type' => $question_type,
-            'option' => $options,
-            'correct_answer' => $validatedData['correct_answer'],
-        ];
+            $dataInsert = [
+                'course_content_id' => $courseContents->id,
+                'question_text' => $validatedData['question_text'],
+                'question_type' => $question_type,
+                'option' => $options,
+                'correct_answer' => $validatedData['correct_answer'],
+                'bobot' => $validatedData['bobot'],
+            ];
+        } else {
+            $validatedData = $request->validate([
+                'question_text' => 'required|string',
+                'bobot' => 'required|integer',
+                'correct_answer' => 'required|string'
+            ]);
+
+            $dataInsert = [
+                'course_content_id' => $courseContents->id,
+                'question_text' => $validatedData['question_text'],
+                'question_type' => $question_type,
+                'correct_answer' => $validatedData['correct_answer'],
+                'bobot' => $validatedData['bobot'],
+            ];
+        }
 
         $quizQuestion = QuizQuestion::create($dataInsert);
 
@@ -88,54 +106,70 @@ class QuizQuestionController
     {
         $data = [
             'title' => 'edit Question',
-            'script' => 'editQuestion_script',
+            'script' => 'editQuestion' . ucfirst($question_type) . '_script',
             'course_id' => $course->id,
             'content_id' => $courseContents->id,
             'question_type' => $question_type,
             'question' => $quizQuestion,
         ];
 
-        return view('admin.course.editQuestion', $data);
+        return view('admin.course.editQuestion-' . ucfirst($question_type), $data);
     }
 
     public function updateQuestion(Course $course, CourseContents $courseContents, QuizQuestion $quizQuestion, $question_type, Request $request)
     {
-        $validatedData = $request->validate([
-            'question_text' => 'required|string',
-            'opsi1' => 'nullable|string',
-            'opsi2' => 'nullable|string',
-            'opsi3' => 'nullable|string',
-            'opsi4' => 'nullable|string',
-            'opsi5' => 'nullable|string',
+        if ($question_type == 'multiple') {
+            $validatedData = $request->validate([
+                'question_text' => 'required|string',
+                'bobot' => 'required|integer',
+                'opsi1' => 'nullable|string',
+                'opsi2' => 'nullable|string',
+                'opsi3' => 'nullable|string',
+                'opsi4' => 'nullable|string',
+                'opsi5' => 'nullable|string',
 
-            'correct_answer' => ['required', function ($attribute, $value, $fail) use ($request) {
-                $validAnswers = [];
-                if ($request->has('opsi1')) $validAnswers[] = 'a';
-                if ($request->has('opsi2')) $validAnswers[] = 'b';
-                if ($request->has('opsi3')) $validAnswers[] = 'c';
-                if ($request->has('opsi4')) $validAnswers[] = 'd';
-                if ($request->has('opsi5')) $validAnswers[] = 'e';
+                'correct_answer' => ['required', function ($attribute, $value, $fail) use ($request) {
+                    $validAnswers = [];
+                    if ($request->has('opsi1')) $validAnswers[] = 'a';
+                    if ($request->has('opsi2')) $validAnswers[] = 'b';
+                    if ($request->has('opsi3')) $validAnswers[] = 'c';
+                    if ($request->has('opsi4')) $validAnswers[] = 'd';
+                    if ($request->has('opsi5')) $validAnswers[] = 'e';
 
-                if (!in_array($value, $validAnswers)) {
-                    $fail('Jawaban benar harus sesuai dengan opsi yang diisi.');
-                }
-            }],
-        ]);
+                    if (!in_array($value, $validAnswers)) {
+                        $fail('Jawaban benar harus sesuai dengan opsi yang diisi.');
+                    }
+                }],
+            ]);
 
-        $options = [];
-        if ($request->has('opsi1')) $options['a'] = $request->opsi1;
-        if ($request->has('opsi2')) $options['b'] = $request->opsi2;
-        if ($request->has('opsi3')) $options['c'] = $request->opsi3;
-        if ($request->has('opsi4')) $options['d'] = $request->opsi4;
-        if ($request->has('opsi5')) $options['e'] = $request->opsi5;
+            $options = [];
+            if ($request->has('opsi1')) $options['a'] = $request->opsi1;
+            if ($request->has('opsi2')) $options['b'] = $request->opsi2;
+            if ($request->has('opsi3')) $options['c'] = $request->opsi3;
+            if ($request->has('opsi4')) $options['d'] = $request->opsi4;
+            if ($request->has('opsi5')) $options['e'] = $request->opsi5;
 
-        $dataUpdate = [
-            'course_content_id' => $courseContents->id,
-            'question_text' => $validatedData['question_text'],
-            'question_type' => $question_type,
-            'option' => $options,
-            'correct_answer' => $validatedData['correct_answer'],
-        ];
+            $dataUpdate = [
+                'course_content_id' => $courseContents->id,
+                'question_text' => $validatedData['question_text'],
+                'question_type' => $question_type,
+                'option' => $options,
+                'correct_answer' => $validatedData['correct_answer'],
+            ];
+        } else {
+            $validatedData = $request->validate([
+                'question_text' => 'required|string',
+                'bobot' => 'required|integer',
+                'correct_answer' => 'required|string',
+            ]);
+
+            $dataUpdate = [
+                'course_content_id' => $courseContents->id,
+                'question_text' => $validatedData['question_text'],
+                'question_type' => $question_type,
+                'correct_answer' => $validatedData['correct_answer'],
+            ];
+        }
 
         $quizQuestion = QuizQuestion::where('id', $quizQuestion->id)->update($dataUpdate);
 

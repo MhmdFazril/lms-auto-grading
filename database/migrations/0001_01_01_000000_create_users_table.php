@@ -16,9 +16,9 @@ return new class extends Migration
 
             // common input
             $table->string('nama', 100);
-            $table->string('tempat_tgl_lahir', 100);
-            $table->date('tgl_lahir');
-            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('tempat_tgl_lahir', 100)->nullable();
+            $table->date('tgl_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->text('alamat')->nullable();
             $table->string('telp', 15)->nullable();
             $table->string('wa', 15)->nullable();
@@ -29,6 +29,9 @@ return new class extends Migration
             $table->boolean('suspen')->default(false);
             $table->enum('role', ['admin', 'teacher', 'student'])->default('student');
             $table->text('catatan')->nullable();
+
+            // 
+            $table->string('kode_admin')->nullable();
 
             // teacher field
             $table->string('nip', 20)->unique()->nullable();

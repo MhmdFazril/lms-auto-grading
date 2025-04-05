@@ -6,7 +6,7 @@
                 <div class="bg-slate-200 p-2 flex justify-between">
                     <section>
                         <h2 class="text-xl inline-block text-green-700">{{ $section->nama }}</h2>
-                        <span>
+                        <span class="{{ auth()->user()->role == 'student' ? 'hidden' : '' }}">
                             <a class="cursor-pointer section-pencil"><i class="fa-solid fa-pencil ml-2"></i></a>
                             <a class="cursor-pointer hidden section-cancel"><i class="fa-solid fa-times ml-2"></i></a>
                             <a class="cursor-pointer hidden section-save" data-sect-id="{{ $section->id }}"><i
@@ -17,7 +17,7 @@
                             Hidden
                         </div>
                     </section>
-                    <div class="dropdown dropdown-end">
+                    <div class="dropdown dropdown-end {{ auth()->user()->role == 'student' ? 'hidden' : '' }}">
                         <div tabindex="0" role="button" class="m-1 cursor-pointer"><i
                                 class="fa-solid fa-ellipsis fa-rotate-90"></i></div>
                         <ul tabindex="0"
@@ -49,14 +49,28 @@
                     </div>
 
                     @foreach ($section->contents as $item)
-                        <div class="course-section-contents">
+                        <div class="{{ auth()->user()->role == 'student' ? 'p-3' : 'course-section-contents' }}">
                             <div>
                                 {{-- <i class="text-xl fa-solid fa-file-pdf"></i> --}}
                                 <i class="text-lg fa-solid fa-book text-red-500"></i>
-                                <a href="{{ route('course.content.show-content', ['course' => $course->id, 'courseContents' => $item->id, 'tipe' => $item->content_type]) }}"
-                                    class="text-grf-primary">{{ $item->nama }}</a>
+                                @php
+                                    $route =
+                                        auth()->user()->role == 'student'
+                                            ? route('student.show-content', [
+                                                'course' => $course->id,
+                                                'courseContent' => $item->id,
+                                                'tipe' => $item->content_type,
+                                            ])
+                                            : route('course.content.show-content', [
+                                                'course' => $course->id,
+                                                'courseContents' => $item->id,
+                                                'tipe' => $item->content_type,
+                                            ]);
+                                @endphp
+
+                                <a href="{{ $route }}" class="text-grf-primary">{{ $item->nama }}</a>
                             </div>
-                            <div class="dropdown dropdown-end">
+                            <div class="dropdown dropdown-end {{ auth()->user()->role == 'student' ? 'hidden' : '' }}">
                                 <div tabindex="0" role="button" class="m-1 cursor-pointer"><i
                                         class="fa-solid fa-ellipsis fa-rotate-90"></i></div>
                                 <ul tabindex="0"
@@ -79,7 +93,7 @@
                         </div>
                     @endforeach
 
-                    <div>
+                    <div class="{{ auth()->user()->role == 'student' ? 'hidden' : '' }}">
                         <span class="cursor-pointer text-grf-primary add-content" data-sect-id="{{ $section->id }}"
                             data-course-id="{{ $course->id }}">
                             -- <i class="fa-solid fa-plus text-xl"></i> --
@@ -90,7 +104,7 @@
         @endforeach
 
         <a href="{{ route('course.section.add-setting', ['course' => $course->id]) }}"
-            class="flex justify-content-between items-center gap-3 p-1 rounded-sm hover:border-2 border-grf-primary">
+            class="flex justify-content-between items-center gap-3 p-1 rounded-sm hover:border-2 border-grf-primary {{ auth()->user()->role == 'student' ? 'hidden' : '' }}">
             <span class="w-full h-[2px] bg-grf-primary"></span>
             <span><i class="fa-solid fa-plus text-grf-primary texlg"></i></span>
             <span class="w-full h-[2px] bg-grf-primary"></span>

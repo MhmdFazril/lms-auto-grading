@@ -8,8 +8,9 @@ use App\Models\Course;
 use App\Models\Sclass;
 use Illuminate\Http\Request;
 use App\Models\CourseContents;
-use App\Models\CourseEnrollment;
 use App\Models\CourseSections;
+use App\Models\CourseEnrollment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CourseController
@@ -92,10 +93,15 @@ class CourseController
      */
     public function show(Course $course)
     {
+        if (Auth::user()->role == 'student') {
+            $section = CourseSections::with('contents')->where(['course_id' => $course->id, 'show' => true])->get();
+        } else {
+            $section = CourseSections::with('contents')->where('course_id', $course->id)->get();
+        }
         $data = [
             'title' => ucwords(strtolower($course->nama)),
             'script' => 'showCourse_script',
-            'sections' => CourseSections::with('contents')->where('course_id', $course->id)->get(),
+            'sections' => $section,
             'course' => $course,
         ];
 

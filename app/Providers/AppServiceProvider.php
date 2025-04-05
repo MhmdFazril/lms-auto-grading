@@ -29,12 +29,16 @@ class AppServiceProvider extends ServiceProvider
 
             if ($user) {
                 if ($user->role == 'teacher') {
-                    $userCourses = Course::with('teacher')->where('teacher_id', $user->id)->get();
-                } else {
-                    $userCourses = Course::where('course_enrollments.student_id', $user->id)
+                    $userCourses = Course::with('teacher')->where(['teacher_id' => $user->id, 'aktif' => true])->get();
+                } else if ($user->role == 'student') {
+                    $userCourses = Course::where(['course_enrollments.student_id' => $user->id, 'aktif' => true])
                         ->leftJoin('course_enrollments', 'course_enrollments.course_id', '=', 'courses.id')
                         ->select('courses.*')
                         ->get();
+                } else if ($user->role == 'admin') {
+                    $userCourses = Course::where('aktif', true)->get();
+                } else {
+                    $userCourses = [];
                 }
 
                 $view->with('userCourses', $userCourses);

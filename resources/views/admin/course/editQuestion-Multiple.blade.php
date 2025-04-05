@@ -26,10 +26,20 @@
                             @enderror
                         </div>
 
+                        <div>
+                            <label class="block mb-1">Bobot soal (0-100) <x-tooltip message="required" /></label>
+                            <input type="text" class="input w-2/12" onkeyup="onlyNumbers(this)" placeholder="Type here"
+                                name="bobot" value="{{ old('bobot', $question->bobot) }}" autocomplete="off"
+                                maxlength="3" id="bobot" />
+                            @error('bobot')
+                                <p class="mt-2 text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 1 </label>
                             <input id="opsi1" type="hidden" name="opsi1"
-                                value="{{ old('opsi1', $question->option['a']) }}">
+                                value="{{ old('opsi1', $question->option['a'] ?? '') }}">
                             <trix-editor input="opsi1" class="trix-editor h-40 p-3 bg-white"></trix-editor>
                             <section class="inline-block mr-4 mb-1 mt-2">
                                 <input type="radio" name="correct_answer" class="radio radio-info" value="a"
@@ -48,7 +58,7 @@
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 2 </label>
                             <input id="opsi2" type="hidden" name="opsi2"
-                                value="{{ old('opsi2', $question->option['b']) }}">
+                                value="{{ old('opsi2', $question->option['b'] ?? '') }}">
                             <trix-editor input="opsi2" class="trix-editor h-40 p-3 bg-white"></trix-editor>
 
                             <section class="inline-block mr-4 mb-2 mt-2">
@@ -68,7 +78,7 @@
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 3 </label>
                             <input id="opsi3" type="hidden" name="opsi3"
-                                value="{{ old('opsi3', $question->option['c']) }}">
+                                value="{{ old('opsi3', $question->option['c'] ?? '') }}">
                             <trix-editor input="opsi3" class="trix-editor h-40 p-3 bg-white"></trix-editor>
 
                             <section class="inline-block mr-4 mb-3 mt-3">
@@ -88,7 +98,7 @@
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 4 </label>
                             <input id="opsi4" type="hidden" name="opsi4"
-                                value="{{ old('opsi4', $question->option['d']) }}">
+                                value="{{ old('opsi4', $question->option['d'] ?? '') }}">
                             <trix-editor input="opsi4" class="trix-editor h-40 p-3 bg-white"></trix-editor>
 
                             <section class="inline-block mr-4 mb-4 mt-4">
@@ -108,7 +118,7 @@
                         <div class="bg-gray-100 border-5 border-gray-100 rounded-md p-3">
                             <label class="block mb-1">Opsi 5 </label>
                             <input id="opsi5" type="hidden" name="opsi5"
-                                value="{{ old('opsi5', $question->option['e']) }}">
+                                value="{{ old('opsi5', $question->option['e'] ?? '') }}">
                             <trix-editor input="opsi5" class="trix-editor h-40 p-3 bg-white"></trix-editor>
 
                             <section class="inline-block mr-4 mb-5 mt-5">
