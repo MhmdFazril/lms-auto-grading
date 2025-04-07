@@ -153,6 +153,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/content/editQuestion/{course}/{courseContents}/{quizQuestion}/{question_type}', [QuizQuestionController::class, 'updateQuestion'])->name('course.content.update-question');
 
         Route::get('/content/deleteQuestion/{course}/{courseContents}/{question}', [QuizQuestionController::class, 'deleteQuestion'])->name('course.content.delete-question');
+
+        Route::get('/content/correction/{course}/{courseContents}/{quizAttempt}', [QuizQuestionController::class, 'correction'])->name('course.content.correct-question');
+
+        Route::post('/content/correction/', [QuizQuestionController::class, 'saveCorrection'])->name('course.content.correct-question-save');
     });
 
     // =============== STUDENT ==============

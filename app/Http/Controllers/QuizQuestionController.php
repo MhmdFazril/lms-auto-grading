@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Course;
-use App\Models\CourseContents;
+use App\Models\QuizAttempts;
 use App\Models\QuizQuestion;
 use Illuminate\Http\Request;
+use App\Models\CourseContents;
+use App\Models\QuizAnswer;
 
 class QuizQuestionController
 {
@@ -178,5 +181,54 @@ class QuizQuestionController
         } else {
             return redirect()->route('course.content.show-content', ['course' => $course->id, 'courseContents' => $courseContents->id, 'tipe' => 'Quiz'])->with('errorToast', 'Gagal menambahkan soal');
         }
+    }
+
+    public function correction(Course $course, CourseContents $courseContents, QuizAttempts $quizAttempt)
+    {
+        $start_time = date_create($quizAttempt->start_time);
+        $end_time = date_create($quizAttempt->end_time);
+        $diff = date_diff($start_time, $end_time);
+
+        $duration = $diff->h . ' Jam ' . $diff->i . ' Menit ' . $diff->s . ' detik';
+
+        $data = [
+            'title' => 'Quiz Check',
+            'script' => 'quizCorrection_script',
+            'course' => $course,
+            'content' => $courseContents,
+            'attempt' => $quizAttempt,
+            'answer' => $quizAttempt->studentAnswer,
+            'duration' => $duration
+        ];
+
+        return view('admin.course.quizCorrection', $data);
+    }
+
+
+    public function saveCorrection(Request $request)
+    {
+        $scoreData = json_decode($request->score, true);
+        $attemptScore = 0;
+        foreach ($scoreData as $score) {
+            $answerId = $score['answer_id'];
+            $answerScore = $score['score'];
+
+            $where = [
+                'id' => $answerId,
+                'quiz_attempts_id' => $request->attempt_id,
+                'student_id' => $request->student_id,
+            ];
+
+            $correct = $answerScore > 0 ? true : false;
+            $attemptScore += $answerScore;
+            QuizAnswer::where($where)->update(['score' => $answerScore, 'isCorrect' => $correct]);
+        }
+
+        QuizAttempts::where('id', $request->attempt_id)->update(['score' => $attemptScore]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Hasil disimpan'
+        ]);
     }
 }

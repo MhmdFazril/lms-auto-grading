@@ -11,9 +11,15 @@ class QuizAttempts extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['student'];
 
     public function studentAnswer()
     {
         return $this->hasMany(QuizAnswer::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
     }
 }

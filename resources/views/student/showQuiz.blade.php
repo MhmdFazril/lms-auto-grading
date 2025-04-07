@@ -85,12 +85,12 @@
             @elseif (\Carbon\Carbon::now() <= \Carbon\Carbon::parse($content->open_quiz))
                 <button class="px-4 py-2 btn bg-red-500 text-white rounded-md">Quiz unopened</button>
             @else
-                <a href="{{ $attemptInfo != null && $attemptInfo->end_time != null ? '#' : route('quiz.attempt', ['courseContent' => $content->id, 'idxQuestion' => '1']) }}"
+                <a href="{{ $attemptInfo != null && $attemptInfo->end_time != null ? route('course.show', ['course' => $course->id]) : route('quiz.attempt', ['courseContent' => $content->id, 'idxQuestion' => '1']) }}"
                     class="px-4 py-2 btn bg-emerald-500 text-white rounded-md {{ $content->close_quiz }}">
                     @if ($attemptInfo != null && $attemptInfo->end_time == null)
                         Continue Quiz
                     @elseif ($attemptInfo != null && $attemptInfo->end_time != null)
-                        Quiz Attempted
+                        Back to the course
                     @else
                         Attempt Quiz
                     @endif

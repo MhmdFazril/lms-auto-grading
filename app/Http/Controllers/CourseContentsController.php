@@ -88,6 +88,7 @@ class CourseContentsController
             'course' => $course,
             'content' => $courseContents,
             'question' => $courseContents->quiz_question,
+            'studentAttempt' => $courseContents->studentAttempt,
         ];
 
         return view('admin.course.showContent-' . ucfirst($tipe), $data);

@@ -27,4 +27,9 @@ class CourseContents extends Model
     {
         return $this->hasMany(QuizQuestion::class, 'course_content_id');
     }
+
+    public function studentAttempt()
+    {
+        return $this->hasMany(QuizAttempts::class, 'course_content_id');
+    }
 }

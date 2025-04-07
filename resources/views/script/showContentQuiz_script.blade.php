@@ -18,4 +18,16 @@
             .replace('__content_id__', content_id)
             .replace('__tipe__', tipe);
     })
+
+    function modalDelete(elem, id) {
+        event.preventDefault();
+        let form = $('#deleteForm');
+
+        form.attr("action", `/admin/major/${id}`);
+        $("#deleteModal")[0].showModal();
+
+        $('#deleteConfirm').on('click', function() {
+            form.submit()
+        })
+    }
 </script>
