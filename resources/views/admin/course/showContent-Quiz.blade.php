@@ -8,6 +8,18 @@
             <li>{{ Str::lower($content->nama) }}</li>
         </ul>
     </div>
+
+    @error('file')
+        <div role="alert" class="alert alert-error mx-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ $message }}</span>
+        </div>
+    @enderror
+
+
     <div class="tabs tabs-border m-5">
         <!-- Student Attempt -->
         <input type="radio" name="quiz_tabs" class="tab" aria-label="Student Attempt" checked />
@@ -63,10 +75,11 @@
 
                 <!-- Tombol Tambah Soal -->
                 <div>
-                    <button class="btn btn-accent text-white">
+                    <button class="btn btn-accent text-white" onclick="import_modal.showModal()">
                         <i class="fa-solid fa-cloud-arrow-down"></i>Import Soal
                     </button>
-                    <button class="btn btn-info text-white" onclick="question_modal.showModal()">+ Tambah Soal</button>
+                    <button class="btn btn-info text-white" onclick="question_modal.showModal()"><i
+                            class="fa-solid fa-plus"></i> Tambah Soal</button>
                 </div>
             </section>
 
@@ -99,53 +112,8 @@
         </div>
 
     </div>
-    {{-- <div class="p-4 space-y-3">
-        <div class="breadcrumbs text-sm bg-slate-100 inline-block px-3">
-            <ul>
-                <li><a href="{{ route('course.show', ['course' => $course->id]) }}">{{ Str::lower($course->nama) }}</a></li>
-                <li>{{ Str::lower($content->nama) }}</li>
-            </ul>
-        </div>
-        <section class="flex justify-between items-center px-2">
-            <h1 class="text-2xl font-bold">Question</h1>
 
-            <!-- Tombol Tambah Soal -->
-            <div>
-                <button class="btn btn-accent text-white">
-                    <i class="fa-solid fa-cloud-arrow-down"></i>Import Soal
-                </button>
-                <button class="btn btn-info text-white" onclick="question_modal.showModal()">+ Tambah Soal</button>
-            </div>
-        </section>
-
-        <input type="hidden" name="course_id" id="course_id" value="{{ $course->id }}">
-        <input type="hidden" name="content_id" id="content_id" value="{{ $content->id }}">
-
-        @if ($question->count() == 0)
-            <h2 class="text-lg italic font-light p-3">No question available yet</h2>
-        @else
-            @foreach ($question as $question)
-                <div class="space-y-4">
-                    <div class="card bg-base-100 shadow-md p-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="font-semibold">{{ strip_tags($question->question_text) }}</p>
-                                <p class="text-sm text-gray-500">Tipe: {{ $question->question_type }}</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <a href="{{ route('course.content.edit-question', ['course' => $course->id, 'courseContents' => $content->id, 'quizQuestion' => $question->id, 'question_type' => $question->question_type]) }}"
-                                    class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil text-gray-50"></i></a>
-
-                                <a href="{{ route('course.content.delete-question', ['course' => $course->id, 'courseContents' => $content->id, 'question' => $question->id]) }}"
-                                    class="btn btn-sm btn-error"><i class="fa-solid fa-trash text-gray-50"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
-    </div> --}}
-
+    {{-- modal question --}}
     <dialog id="question_modal" class="modal">
         <div class="modal-box p-0 max-w-lg min-h-10/12">
             <h3 class="text-lg font-bold p-5">Add question type</h3>
@@ -183,7 +151,7 @@
             <div class="modal-action absolute bottom-3 right-3">
                 <form method="dialog">
                     <button class="btn btn-info text-white">Close</button>
-                    <button class="btn btn-accent text-white">Add</button>
+                    <button class="btn btn-accent text-white btn-add-question">Add</button>
                 </form>
             </div>
 
@@ -191,6 +159,35 @@
             <span class="hidden" id="course_id"></span>
         </div>
     </dialog>
+
+
+    {{-- modal import --}}
+    <dialog id="import_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Import File</h3>
+            <p class="mt-4">Pilih file soal yang ingin Anda import</p>
+            <a href="{{ asset('formatExcel/QuestionImportFormat.xlsx') }}" download="QuestionImportFormat.xlsx"
+                class="italic text-light text-green-600 mb-4 block">
+                <i class="fa-solid fa-file-excel"></i>
+                Klik disini untuk download format
+            </a>
+            <!-- Form -->
+            <form method="post" id="formImport"
+                action="{{ route('import.question.upload', ['course' => $course->id, 'courseContent' => $content->id]) }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <input type="file" id="file" name="file" class="file-input file-input-bordered w-full"
+                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                </div>
+                <div class="modal-action">
+                    <button class="btn btn-primary btn-import">Import</button>
+                    <button class="btn close-import">Close</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
 
     <x-modal.delete id="deleteModal" title="Konfirmasi hapus"
         message="Apakah Anda yakin ingin menghapus data ini? semua data yang berhubungan dengan data ini akan dihapus"

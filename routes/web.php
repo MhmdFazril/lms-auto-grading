@@ -10,6 +10,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LogosController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MclassController;
+use App\Http\Controllers\QuestionImportController;
 use App\Http\Controllers\QuizAttemptsController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
@@ -157,6 +158,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/content/correction/{course}/{courseContents}/{quizAttempt}', [QuizQuestionController::class, 'correction'])->name('course.content.correct-question');
 
         Route::post('/content/correction/', [QuizQuestionController::class, 'saveCorrection'])->name('course.content.correct-question-save');
+
+        Route::post('/import/question/upload/{course}/{courseContent}', [QuestionImportController::class, 'uploadQuestion'])->name('import.question.upload');
+        Route::get('/import/question/import/{course}/{courseContent}', [QuestionImportController::class, 'importQuestion'])->name('import.question.import');
     });
 
     // =============== STUDENT ==============

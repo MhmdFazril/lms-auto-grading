@@ -18,4 +18,28 @@ course guru         | done
 course murid        | done
 
 ujian               | done 
+koreksi             | done
+import soal         | done
+
+
+MODEL
+- Tidak ada threshold penilaian
+= Kamu proses satu per satu embedding, padahal Sentence Transformers support batch processing. Kalau datanya besar, akan jauh lebih cepat kalau di-batch.
+- Disarankan: coba juga tanpa preprocessing dan bandingkan hasilnya.
+- Perlu try-except minimal.
+
+
+- Buat fungsi penilaian otomatis dengan threshold.
+- Integrasikan ke API untuk aplikasi web kamu.
+- Jika dataset banyak, pertimbangkan untuk gunakan batch processing supaya lebih cepat.
+
+- Pisahkan preprocessing untuk Bahasa Indonesia dan Bahasa Inggris.
+- Atau, untuk aman, model ini sebenarnya sudah cukup tanpa preprocessing berlebihan, untuk bahasa Inggris malah lebih bagus langsung raw text.
+- Solusi lain (lebih lanjut): Jika datasetnya campur atau kamu ingin fleksibel, buatlah deteksi bahasa otomatis sebelum preprocessing.
+
+-Output ke CSV/JSON, biar bisa diproses lebih lanjut atau untuk backend.
+
+
+
+
 

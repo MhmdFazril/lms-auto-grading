@@ -65,18 +65,23 @@ class QuizAttemptsController
         $quizAttempts = QuizAttempts::create($dataAttempts);
 
         if ($quizAttempts) {
-            $question = $content->quiz_question()->inRandomOrder()->get();
+            if ($content->shuffle) {
+                $question = $content->quiz_question()->inRandomOrder()->get();
+            } else {
+                $question = $content->quiz_question;
+            }
 
             $index = 1;
             foreach ($question as $val) {
-                QuizAnswer::create([
-                    'quiz_attempt_id' => $quizAttempts->id,
+                $answer = [
+                    'quiz_attempts_id' => $quizAttempts->id,
                     'quiz_question_id' => $val->id,
                     'student_id' => Auth::user()->id,
                     'order' => $index++,
-                ]);
-            }
+                ];
 
+                QuizAnswer::create($answer);
+            }
             return $quizAttempts;
         }
 

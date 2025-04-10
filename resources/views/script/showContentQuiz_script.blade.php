@@ -7,7 +7,7 @@
         sectiondeskripsi.find('#' + sectionText).show()
     })
 
-    $(document).on('click', '.btn-accent', function() {
+    $(document).on('click', '.btn-add-question', function() {
         let course_id = $('#course_id').val()
         let content_id = $('#content_id').val()
         let tipe = $('.question_type:checked').val();
@@ -19,7 +19,21 @@
             .replace('__tipe__', tipe);
     })
 
-    function modalDelete(elem, id) {
+    $(document).on('click', '.btn-import', function(e) {
+        e.preventDefault()
+        $('#import_modal')[0].close();
+
+        loading()
+        $('#formImport').submit()
+    })
+
+    $(document).on('click', '.close-import', function(e) {
+        e.preventDefault()
+        $('#import_modal')[0].close();
+    })
+
+
+    function modalDelete(elem, id) { // untuk student attempt
         event.preventDefault();
         let form = $('#deleteForm');
 

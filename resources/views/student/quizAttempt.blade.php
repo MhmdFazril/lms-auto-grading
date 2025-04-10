@@ -82,8 +82,9 @@
             <h2 class="font-semibold">Quiz Navigation</h2>
             <div class="border border-gray-500 rounded-md p-2 mt-2 flex flex-wrap gap-3 max-h-1/2 overflow-auto">
                 @foreach ($allQuestion as $item)
-                    <button
-                        class="border cursor-pointer relative hover:bg-gray-200 {{ $item->order == $idxQuestion ? 'bg-blue-400 text-white' : '' }} transition rounded-sm w-7 h-8 overflow-hidden">{{ $item->order }}
+                    <a href="{{ route('quiz.attempt', ['courseContent' => $content->id, 'idxQuestion' => $item->order]) }}"
+                        class="border cursor-pointer relative hover:bg-gray-200 {{ $item->order == $idxQuestion ? 'bg-blue-400 text-white' : '' }} transition rounded-sm w-7 h-8 overflow-hidden text-center">
+                        {{ $item->order }}
                         <span
                             class="w-2 h-2 bg-red-600 outline outline-black rounded-br-sm absolute left-0 top-0 {{ $item->markFlag != null && $item->student_answer == null ? '' : 'hidden' }}">
                         </span>
@@ -91,7 +92,7 @@
                         <span
                             class="w-2 h-2 bg-green-600 outline outline-black rounded-br-sm absolute left-0 top-0 {{ $item->student_answer != null ? '' : 'hidden' }}">
                         </span>
-                    </button>
+                    </a>
                 @endforeach
             </div>
             <div class="mt-2">
