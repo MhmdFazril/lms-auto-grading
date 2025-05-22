@@ -19,6 +19,7 @@ return new class extends Migration
             $table->json('option')->nullable();
             $table->text('correct_answer')->nullable();
             $table->double('bobot')->default('0');
+            $table->enum('jenis_soal', ['terbatas', 'bebas'])->nullable();
             $table->timestamps();
         });
     }

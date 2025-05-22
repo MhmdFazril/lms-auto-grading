@@ -20,11 +20,11 @@
         formData.append("students", selected);
         formData.append("wali_kelas", wali_kelas);
         formData.append("id_class", $('#id_class').text());
-
+        loading()
         sendAjax("{{ route('sclass.insert') }}", formData)
             .then(response => {
                 if (response.success) {
-
+                    unloading()
                     toastr.success(response.message);
 
                     $('.user-students:checked').each(function() {
@@ -41,10 +41,12 @@
                     })
 
                 } else {
+                    unloading()
                     toastr.error(response.message);
                 }
             })
             .catch(error => {
+                unloading()
                 toastr.error("Terjadi kesalahan sistem");
             });
     }
@@ -64,12 +66,13 @@
         let formData = new FormData();
         formData.append("students", selected);
         formData.append("id_class", $('#id_class').text());
-
+        loading()
         sendAjax("{{ route('sclass.remove') }}", formData)
             .then(response => {
                 if (response.success) {
                     toastr.success(response.message);
 
+                    unloading()
                     $('.class-student:checked').each(function() {
                         let tr = $(this).closest('tr');
                         $('#table-students').show()
@@ -85,10 +88,12 @@
                     })
 
                 } else {
+                    unloading()
                     toastr.error(response.message);
                 }
             })
             .catch(error => {
+                unloading()
                 toastr.error("Terjadi kesalahan sistem");
             });
     }
@@ -99,8 +104,8 @@
         let studentTable = $('#table-students tbody')
         let classTable = $('#table-class tbody')
 
-        formData.append('filter', $('#id_class').text())
-
+        // formData.append('filter', $('#id_class').text())
+        formData.append('filter', val)
 
         loading()
         sendAjax("{{ route('sclass.filter') }}", formData)

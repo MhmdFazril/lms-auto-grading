@@ -28,6 +28,7 @@
                         <th class="border border-gray-300 px-4 py-2 text-left">Pilihan E</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Jawaban Benar</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Kunci Jawaban</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Jenis essay</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +68,11 @@
                             <td
                                 class="{{ isset($question['errors']['kunci_essay']) ? 'bg-red-500' : '' }} border border-gray-300 px-4 py-2">
                                 {{ $question['kunci_essay'] }}
+                            </td>
+
+                            <td
+                                class="{{ isset($question['errors']['jenis_essay']) ? 'bg-red-500' : '' }} border border-gray-300 px-4 py-2">
+                                {{ $question['jenis_essay'] }}
                             </td>
                         </tr>
                     @endforeach

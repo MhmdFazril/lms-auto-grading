@@ -44,7 +44,7 @@ class SchoolController
         $validateData = $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'email' => 'nullable|email|unique:school',
+            'email' => 'nullable|email|unique:schools',
             'gambar' => 'image|file|max:2048',
         ]);
 

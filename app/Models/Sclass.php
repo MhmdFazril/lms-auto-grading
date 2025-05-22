@@ -11,7 +11,7 @@ class Sclass extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $with = ['student', 'major', 'mclass'];
+    // protected $with = ['student', 'major', 'mclass'];
 
     public function student()
     {

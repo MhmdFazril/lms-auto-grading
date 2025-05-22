@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\CourseEnrollment;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // ngrok 
+        // if (config('app.env') === 'local') {
+        //     URL::forceScheme('https');
+        // }
+
         View::composer('*', function ($view) {
             $user = Auth::user();
 

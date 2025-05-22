@@ -28,7 +28,7 @@
 
                         <div>
                             <label class="block mb-1">Bobot soal (0-100) <x-tooltip message="required" /></label>
-                            <input type="text" class="input w-2/12" onkeyup="onlyNumbers(this)" placeholder="Type here"
+                            <input type="text" class="input w-1/12" onkeyup="onlyNumbers(this)" placeholder="Type here"
                                 name="bobot" value="{{ old('bobot') }}" autocomplete="off" maxlength="3"
                                 id="bobot" />
                             @error('bobot')

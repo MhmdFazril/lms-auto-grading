@@ -72,12 +72,16 @@
 
         sendAjax("{{ route('course.saveParticipant') }}", formData)
             .then(response => {
+                $('#participantModal')[0].close();
+
                 if (response) {
                     toastr.success('berhasil menambahkan data')
                     studentItem = response.selectedItem;
                 }
             })
             .catch(error => {
+                $('#participantModal')[0].close();
+
                 toastr.error("Terjadi kesalahan sistem");
             });
     }

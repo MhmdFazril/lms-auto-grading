@@ -63,8 +63,21 @@
                                 Not attempted
                             @endif
                         </td>
-                        <td class="border border-gray-300 px-4 py-2 text-center">--</td>
-                        <td class="border border-gray-300 px-4 py-2 text-center">--</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">
+                            @if ($attemptInfo->review)
+                                {{ $attemptInfo->score }}
+                            @else
+                                --
+                            @endif
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">
+                            @if ($attemptInfo->review)
+                                <a href="{{ route('quiz.review', ['course' => $course, 'courseContent' => $content, 'tipe' => 'quiz']) }}"
+                                    class="text-blue-500">Review</a>
+                            @else
+                                --
+                            @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>

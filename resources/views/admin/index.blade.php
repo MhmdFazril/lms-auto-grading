@@ -59,8 +59,7 @@
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">Course Management</h2>
                 <div class="ml-4 space-y-2">
                     <a href="{{ route('course.index') }}"
-                        class="text-blue-500 hover:text-blue-600 hover:underline block">Manage courses and
-                        categories</a>
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Manage courses</a>
                     {{-- <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Add new category</a> --}}
                     <a href="{{ route('course.create') }}"
                         class="text-blue-500 hover:text-blue-600 hover:underline block">Add new course</a>

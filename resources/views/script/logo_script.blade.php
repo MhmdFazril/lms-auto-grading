@@ -42,7 +42,7 @@
 
             let formData = new FormData();
             formData.append("_token", "{{ csrf_token() }}"); // CSRF Laravel
-            formData.append("url", file.dataURL);
+            formData.append("filename", file.name);
 
             sendAjax("{{ route('logos.destroy') }}", formData)
                 .then(response => {
@@ -51,9 +51,10 @@
                     } else {
                         toastr.error(response.message);
                     }
+
                 })
                 .catch(error => {
-                    toastr.error("Terjadi kesalahn sistem");
+                    toastr.error("Terjadi kesalahan sistem");
                 });
 
         });
@@ -63,9 +64,9 @@
 
             let formData = new FormData();
             formData.append("_token", "{{ csrf_token() }}"); // CSRF Laravel
-            formData.append("url", file.dataURL);
+            formData.append("filename", file.name);
 
-            sendAjax("{{ route('logos.destroy') }}", formData)
+            sendAjax("{{ route('favicon.destroy') }}", formData)
                 .then(response => {
                     if (response.success) {
                         toastr.success(response.message);
@@ -74,7 +75,7 @@
                     }
                 })
                 .catch(error => {
-                    toastr.error("Terjadi kesalahn sistem");
+                    toastr.error("Terjadi kesalahan sistem");
                 });
 
         });

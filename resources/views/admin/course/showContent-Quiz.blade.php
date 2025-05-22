@@ -1,12 +1,19 @@
 @extends('layout.app')
 
 @section('content')
-    <div class="breadcrumbs text-sm bg-slate-100 inline-block px-3 mx-4 mt-4">
-        <ul>
-            <li><a href="{{ route('course.show', ['course' => $course->id]) }}">{{ Str::lower($course->nama) }}</a>
-            </li>
-            <li>{{ Str::lower($content->nama) }}</li>
-        </ul>
+
+    <div class="flex justify-between">
+        <div class="breadcrumbs text-sm bg-slate-100 inline-block px-3 mx-4 mt-4">
+            <ul>
+                <li><a href="{{ route('course.show', ['course' => $course->id]) }}">{{ Str::lower($course->nama) }}</a>
+                </li>
+                <li>{{ Str::lower($content->nama) }}</li>
+            </ul>
+        </div>
+
+        <button class="mx-4 mt-4 btn btn-accent text-white {{ count($studentAttempt) > 0 ? 'block' : 'hidden' }}"
+            onclick="finishAll(this, {{ $content->id }})">Finish
+            Review All</button>
     </div>
 
     @error('file')
@@ -25,7 +32,7 @@
         <input type="radio" name="quiz_tabs" class="tab" aria-label="Student Attempt" checked />
         <div class="tab-content border border-base-300 bg-base-100 p-6 space-y-5">
             <div class="overflow-x-auto">
-                <table class="table table-zebra">
+                <table class="table table-zebra" id="table-attempt">
                     <!-- head -->
                     <thead>
                         <tr>
@@ -33,9 +40,10 @@
                             <th>Nama</th>
                             <th>Start Time</th>
                             <th>Finish Time</th>
-                            <th>Score</th>
+                            <th class="text-center">Score</th>
                             {{-- <th>Feedback</th> --}}
-                            <th>Action</th>
+                            <th class="text-center">Finish Review</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,9 +53,16 @@
                                 <td>{{ $attempt->student->nama }}</td>
                                 <td>{{ date('d-m-Y, H:i:s', strtotime($attempt->start_time)) }}</td>
                                 <td>{{ date('d-m-Y, H:i:s', strtotime($attempt->end_time)) }}</td>
-                                <td>{{ $attempt->score ?? '--' }}</td>
-                                {{-- <td>{{ $attempt->feedback ?? '--' }}</td> --}}
-                                <td>
+                                <td class="text-center">{{ $attempt->score ?? '--' }}</td>
+                                <td class="text-center" id="review" data-attempt="{{ $attempt->id }}"
+                                    data-content="{{ $content->id }}">
+                                    @if ($attempt->review)
+                                        <div class="badge cursor-pointer badge-success text-white">Yes</div>
+                                    @else
+                                        <div class="badge cursor-pointer badge-error text-white">No</div>
+                                    @endif
+                                </td>
+                                <td class="text-center">
                                     <a href="{{ route('course.content.correct-question', ['course' => $course->id, 'courseContents' => $content->id, 'quizAttempt' => $attempt->id]) }}"
                                         class="btn bg-blue-700 btn-xs">
                                         <i class="fa-solid fa-check-to-slot text-white"></i>
@@ -133,7 +148,7 @@
                         <input type="radio" name="question_type" class="question_type" value="essay" id="essay">
                         <label for="essay">
                             <i class="fa-solid fa-file-lines"></i>
-                            <span>Essay</span>
+                            <span>Essay</span pan>
                         </label>
                     </section>
                 </div>
@@ -187,6 +202,27 @@
             </form>
         </div>
     </dialog>
+
+    <!-- Modal review -->
+    <dialog id="review_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box space-y-4">
+            <h3 class="text-xl font-bold text-center text-red-500">
+                ⚠️ Konfirmasi Tindakan
+            </h3>
+            <p class="text-base text-gray-700 leading-relaxed text-justify">
+                Apakah Anda yakin ingin melanjutkan tindakan ini? Tindakan ini akan memberikan akses kepada siswa
+                untuk melihat hasil quiz yang telah dinilai. Pastikan Anda sudah melakukan penilaian dengan benar
+                sebelum melanjutkan.
+            </p>
+            <div class="modal-action justify-center gap-4">
+                <button class="btn btn-success text-white px-6" id="confirm_review">Ya, Saya Yakin</button>
+                <button class="btn btn-outline" onclick="document.getElementById('review_modal').close()">Batal</button>
+            </div>
+        </div>
+    </dialog>
+
+
+
 
 
     <x-modal.delete id="deleteModal" title="Konfirmasi hapus"

@@ -37,14 +37,29 @@
                         </div>
 
 
-                        <div>
-                            <label class="block mb-1">Bobot soal (0-100) <x-tooltip message="required" /></label>
-                            <input type="text" class="input w-2/12" onkeyup="onlyNumbers(this)" placeholder="Type here"
-                                name="bobot" value="{{ old('bobot', $question->bobot) }}" autocomplete="off"
-                                maxlength="3" id="bobot" />
-                            @error('bobot')
-                                <p class="mt-2 text-red-500">{{ $message }}</p>
-                            @enderror
+                        <div class="flex gap-6">
+                            <section>
+                                <label class="block mb-1">Bobot soal (0-100) <x-tooltip message="required" /></label>
+                                <input type="text" class="input w-full" onkeyup="onlyNumbers(this)"
+                                    placeholder="Type here" name="bobot" value="{{ old('bobot', $question->bobot) }}"
+                                    autocomplete="off" maxlength="3" id="bobot" />
+                                @error('bobot')
+                                    <p class="mt-2 text-red-500">{{ $message }}</p>
+                                @enderror
+                            </section>
+
+                            <section class="w-56">
+                                <label class="block mb-1">Jenis Soal <x-tooltip message="required" /></label>
+                                <select class="select w-full" name="jenis_soal" id="jenis_soal">
+                                    <option value="terbatas" {{ $question->jenis_soal == 'terbatas' ? 'selected' : '' }}>
+                                        terbatas</option>
+                                    <option value="bebas" {{ $question->jenis_soal == 'bebas' ? 'selected' : '' }}>bebas
+                                    </option>
+                                </select>
+                                @error('jenis_soal')
+                                    <p class="mt-2 text-red-500">{{ $message }}</p>
+                                @enderror
+                            </section>
                         </div>
 
                     </div>

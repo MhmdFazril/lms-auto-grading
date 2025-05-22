@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('logos', function (Blueprint $table) {
             $table->id();
-            $table->string('file');
-            $table->double('size');
-            $table->string('path');
+            $table->string('file')->nullable();
+            $table->double('size')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
         });
     }

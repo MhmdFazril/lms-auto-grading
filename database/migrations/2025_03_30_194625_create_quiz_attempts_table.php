@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('end_time')->nullable();
             $table->double('score')->nullable();
             $table->text('feedback')->nullable();
+            $table->boolean('review')->default(false);
             $table->enum('status', ['attempt', 'finish'])->default('attempt');
             $table->timestamps();
         });

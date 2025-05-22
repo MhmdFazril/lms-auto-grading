@@ -61,6 +61,16 @@ class QuestionImportController
                 $errorsInfo[] = 'Kunci jawaban essay harus diisi';
             }
 
+            if ($jenis == 'essay' && empty($row[11])) {
+                $errors['jenis_essay'] = 'Jenis soal essay harus diisi';
+                $errorsInfo[] = 'Jenis soal essay harus diisi';
+            }
+
+            if ($jenis == 'essay' && $row[11] != 'terbatas' && $row[11] != 'bebas') {
+                $errors['jenis_essay'] = 'Jenis soal essay pilih terbatas atau bebas';
+                $errorsInfo[] = 'Jenis soal essay pilih terbatas atau bebas';
+            }
+
             return [
                 'no' => $row[0] ?? null,
                 'bobot' => $row[1] ?? null,
@@ -73,10 +83,10 @@ class QuestionImportController
                 'e' => $row[8] ?? '',
                 'jawaban_benar' => strtoupper($row[9] ?? ''),
                 'kunci_essay' => $row[10] ?? '',
+                'jenis_essay' => $row[11] ?? '',
                 'errors' => $errors,
             ];
-        })
-            ->toArray();
+        })->toArray();
 
 
         session(['import_questions' => $questions]);
@@ -107,6 +117,7 @@ class QuestionImportController
                         'question_type' => $question['jenis'],
                         'correct_answer' => $question['kunci_essay'],
                         'bobot' => $question['bobot'],
+                        'jenis_soal' => $question['jenis_essay'],
                     ];
                 } else {
                     $options = [

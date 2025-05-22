@@ -12,7 +12,7 @@
             <div class="flex flex-col sm:flex-row justify-between text-sm text-gray-700">
                 <div>
                     <p><strong>Quiz Name:</strong> {{ $content->nama }}</p>
-                    <p><strong>Subject:</strong> {{ Str::ucfirst(Str::lower($major->nama)) }}</p>
+                    <p><strong>Major:</strong> {{ Str::ucfirst(Str::lower($major->nama)) }}</p>
                 </div>
                 <div class="mt-2 sm:mt-0 text-sm">
                     <p><strong>Student Name:</strong> {{ Str::ucfirst(Str::lower(auth()->user()->nama)) }}</p>

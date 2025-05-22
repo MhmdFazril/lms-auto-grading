@@ -32,6 +32,121 @@
         $('#import_modal')[0].close();
     })
 
+    $(document).on('click', '#review', function() {
+        let $this = $(this); // simpan referensi tombol yang diklik
+        let text = $this.find('.badge').text().trim();
+
+        const formData = new FormData();
+        formData.append("content_id", $this.data('content'));
+        formData.append("attempt_id", $this.data('attempt'));
+        formData.append("text", text);
+
+        if (text === 'No') {
+            $('#review_modal')[0].showModal();
+            $('#review_modal .btn-success').off('click').on('click', function() {
+
+                $('#review_modal')[0].close();
+
+                sendAjax("{{ route('quiz.attempt.update-review') }}", formData)
+                    .then(response => {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            $this.find('.badge').text(response.review);
+                            if (response.review === 'No') {
+                                $this.find('.badge').removeClass('badge-success').addClass(
+                                    'badge-error');
+                            } else {
+                                $this.find('.badge').removeClass('badge-error').addClass(
+                                    'badge-success');
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    })
+                    .catch(error => {
+                        toastr.error("Terjadi kesalahan sistem");
+                    });
+            });
+
+        } else {
+            sendAjax("{{ route('quiz.attempt.update-review') }}", formData)
+                .then(response => {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $this.find('.badge').text(response.review);
+                        if (response.review === 'No') {
+                            $this.find('.badge').removeClass('badge-success').addClass('badge-error');
+                        } else {
+                            $this.find('.badge').removeClass('badge-error').addClass('badge-success');
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                })
+                .catch(error => {
+                    toastr.error("Terjadi kesalahan sistem");
+                });
+        }
+    });
+
+
+    function finishAll(buttonElement, content) {
+        let $btn = $(buttonElement); // pastikan jadi jQuery object
+        let color = $btn.hasClass('btn-accent');
+
+        let all = color; // jika btn-accent berarti true, sebaliknya false
+
+        const formData = new FormData();
+        formData.append("content_id", content);
+        formData.append("all", all);
+
+        if (color) {
+            $('#review_modal')[0].showModal();
+
+            $('#review_modal .btn-success').off('click').on('click', function() {
+                sendAjax("{{ route('quiz.attempt.update-review-all') }}", formData)
+                    .then(response => {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            $('#table-attempt tbody tr').each(function() {
+                                const reviewTd = $(this).find('td#review');
+                                const badgeDiv = reviewTd.find(
+                                    'div.badge-error');
+
+                                if (badgeDiv.length > 0) {
+                                    badgeDiv
+                                        .removeClass('badge-error')
+                                        .addClass('badge-success')
+                                        .text('Yes');
+                                }
+                            });
+
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    })
+                    .catch(error => {
+                        toastr.error("Terjadi kesalahan sistem");
+                    });
+            });
+
+        } else {
+            sendAjax("{{ route('quiz.attempt.update-review-all') }}", formData)
+                .then(response => {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $btn.removeClass('btn-info').addClass('btn-accent');
+                    } else {
+                        toastr.error(response.message);
+                    }
+                })
+                .catch(error => {
+                    toastr.error("Terjadi kesalahan sistem");
+                });
+        }
+    }
+
 
     function modalDelete(elem, id) { // untuk student attempt
         event.preventDefault();

@@ -26,7 +26,8 @@ class LogosController
             'file' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
 
-        $fileName = 'logos_' . time() . '.' . $request->file->extension();
+        $originalName = pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = 'logos_' . $originalName . '.' . $request->file->extension();
         $path = $request->file('file')->storeAs('logo', $fileName);
         $size = $request->file->getSize();
 
@@ -37,14 +38,15 @@ class LogosController
                 'size' => $size,
                 'path' => $path,
             ]);
-        } else {
-            Storage::delete($cek->path);
-            Logos::where('id', 1)->update([
-                'file' => $fileName,
-                'size' => $size,
-                'path' => $path,
-            ]);
         }
+        // else {
+        //     Storage::delete($cek->path);
+        //     Logos::where('id', 1)->update([
+        //         'file' => $fileName,
+        //         'size' => $size,
+        //         'path' => $path,
+        //     ]);
+        // }
 
         return response()->json([
             'success' => true,
@@ -61,7 +63,8 @@ class LogosController
             'file' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
 
-        $fileName = 'favicon_' . time() . '.' . $request->file->extension();
+        $originalName = pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = 'favicon_' . $originalName . '.' . $request->file->extension();
         $path = $request->file('file')->storeAs('logo', $fileName);
         $size = $request->file->getSize();
 
@@ -72,14 +75,15 @@ class LogosController
                 'size' => $size,
                 'path' => $path,
             ]);
-        } else {
-            Storage::delete($cek->path);
-            Logos::where('id', 1)->update([
-                'file' => $fileName,
-                'size' => $size,
-                'path' => $path,
-            ]);
         }
+        // else {
+        //     Storage::delete($cek->path);
+        //     Logos::where('id', 1)->update([
+        //         'file' => $fileName,
+        //         'size' => $size,
+        //         'path' => $path,
+        //     ]);
+        // }
 
         return response()->json([
             'success' => true,
@@ -95,15 +99,51 @@ class LogosController
         $success = false;
         $message = '';
 
-        $path = substr($request->url, 9);
-
-        if (Storage::delete($path)) {
-            Logos::where('path', $path)->delete();
+        $cleanFilename = preg_replace('/^logos_/', '', $request->filename); // hapus logos_ di awal
+        $path = Logos::where('file', 'like', '%logos_' . $cleanFilename . '%')->first();
+        if ($path != null) {
+            if (Storage::delete($path->path)) {
+                Logos::where('path', $path->path)->delete();
+                $success = true;
+                $message = 'berhasil menghapus gambar';
+            } else {
+                $success = false;
+                $message = 'gagal menghapus gambar';
+            }
+        } else {
             $success = true;
             $message = 'berhasil menghapus gambar';
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'back' => $request->url,
+        ]);
+    }
+
+    function removeFavicon(Request $request)
+    {
+        $success = false;
+        $message = '';
+
+        // $path = substr($request->url, 9);
+
+        $cleanFilename = preg_replace('/^favicon_/', '', $request->filename); // hapus logos_ di awal
+        $path = Logos::where('file', 'like', '%favicon_' . $cleanFilename . '%')->first();
+
+        if ($path != null) {
+            if (Storage::delete($path->path)) {
+                Logos::where('path', $path->path)->delete();
+                $success = true;
+                $message = 'berhasil menghapus gambar';
+            } else {
+                $success = false;
+                $message = 'gagal menghapus gambar';
+            }
         } else {
-            $success = false;
-            $message = 'gagal menghapus gambar';
+            $success = true;
+            $message = 'berhasil menghapus gambar';
         }
 
         return response()->json([

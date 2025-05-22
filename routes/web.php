@@ -84,39 +84,6 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/course/getParticipant', [CourseController::class, 'getParticipant'])->name('course.getParticipant');
         Route::post('/course/saveParticipant', [CourseController::class, 'saveParticipant'])->name('course.saveParticipant');
-
-
-        // // =============== KHUSUS ADMIN DAN TEACHER ==============
-        // Route::withoutMiddleware('role:admin')->middleware('role:teacher')->group(function () {
-        //     Route::get('/course/section/edit-setting/{course}/{courseSection}', [CourseController::class, 'editSetting'])->name('course.section.edit-setting');
-        //     Route::post('/course/section/edit-setting/{course}/{courseSection}', [CourseController::class, 'editSettingPost'])->name('course.section.edit-setting-post');
-
-        //     Route::get('/course/section/add-setting/{course}', [CourseController::class, 'addSetting'])->name('course.section.add-setting');
-        //     Route::post('/course/section/add-setting/{course}', [CourseController::class, 'addSettingPost'])->name('course.section.add-setting-post');
-
-        //     Route::get('/course/section/delete/{course}/{courseSection}', [CourseController::class, 'deleteSection'])->name('course.section.delete-section');
-        //     Route::post('/course/section/visibility}', [CourseController::class, 'visibilitySections'])->name('course.section.visibility');
-
-        //     Route::post('/course/section/update', [CourseController::class, 'updateSection'])->name('course.section.update-section');
-
-        //     Route::get('/course/section/addContent/{course}/{courseSection}/{tipe}', [CourseController::class, 'addContent'])->name('course.section.add-content');
-
-        //     Route::post('/content/store/{course}/{courseSection}', [CourseContentsController::class, 'storeQuiz'])->name('course.content.store-quiz');
-        //     Route::get('/content/delete/{course}/{courseContents}', [CourseContentsController::class, 'deleteContent'])->name('course.content.delete-content');
-
-        //     Route::get('/content/edit/{course}/{courseContents}/{tipe}', [CourseContentsController::class, 'editContent'])->name('course.content.edit-content');
-        //     Route::post('/content/update/{course}/{courseContents}', [CourseContentsController::class, 'updateContent'])->name('course.content.update-content');
-
-        //     Route::get('/content/show/{course}/{courseContents}/{tipe}', [CourseContentsController::class, 'showContent'])->name('course.content.show-content');
-
-        //     Route::get('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'createQuestion'])->name('course.content.create-question');
-        //     Route::post('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'storeQuestion'])->name('course.content.store-question');
-
-        //     Route::get('/content/editQuestion/{course}/{courseContents}/{quizQuestion}/{question_type}', [QuizQuestionController::class, 'editQuestion'])->name('course.content.edit-question');
-        //     Route::post('/content/editQuestion/{course}/{courseContents}/{quizQuestion}/{question_type}', [QuizQuestionController::class, 'updateQuestion'])->name('course.content.update-question');
-
-        //     Route::get('/content/deleteQuestion/{course}/{courseContents}/{question}', [QuizQuestionController::class, 'deleteQuestion'])->name('course.content.delete-question');
-        // });
     });
 
 
@@ -146,6 +113,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/content/update/{course}/{courseContents}', [CourseContentsController::class, 'updateContent'])->name('course.content.update-content');
 
         Route::get('/content/show/{course}/{courseContents}/{tipe}', [CourseContentsController::class, 'showContent'])->name('course.content.show-content');
+        Route::post('/content/attempt/review', [CourseContentsController::class, 'changeAttemptReview'])->name('quiz.attempt.update-review');
+        Route::post('/content/attempt/review/all', [CourseContentsController::class, 'changeAttemptReviewAll'])->name('quiz.attempt.update-review-all');
 
         Route::get('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'createQuestion'])->name('course.content.create-question');
         Route::post('/content/createQuestion/{course}/{courseContents}/{question_type}', [QuizQuestionController::class, 'storeQuestion'])->name('course.content.store-question');
@@ -169,5 +138,7 @@ Route::middleware('auth')->group(function () {
         Route::any('/quiz/attempt/{courseContent}/{idxQuestion}', [QuizAttemptsController::class, 'attemptQuiz'])->name('quiz.attempt');
         Route::get('/quiz/finish/{courseContents}', [QuizAttemptsController::class, 'finishQuiz'])->name('quiz.finish');
         Route::get('/quiz/submit/{courseContents}', [QuizAttemptsController::class, 'submitQuiz'])->name('quiz.submit');
+
+        Route::get('/quiz/review/{course}/{courseContent}/{tipe}', [StudentCourseController::class, 'quizReview'])->name('quiz.review');
     });
 });

@@ -72,8 +72,10 @@ class QuizQuestionController
             $validatedData = $request->validate([
                 'question_text' => 'required|string',
                 'bobot' => 'required|integer',
-                'correct_answer' => 'required|string'
+                'correct_answer' => 'required|string',
+                'jenis_soal' => 'required|string'
             ]);
+
 
             $dataInsert = [
                 'course_content_id' => $courseContents->id,
@@ -81,6 +83,7 @@ class QuizQuestionController
                 'question_type' => $question_type,
                 'correct_answer' => $validatedData['correct_answer'],
                 'bobot' => $validatedData['bobot'],
+                'jenis_soal' => $validatedData['jenis_soal'],
             ];
         }
 
@@ -164,6 +167,7 @@ class QuizQuestionController
                 'question_text' => 'required|string',
                 'bobot' => 'required|integer',
                 'correct_answer' => 'required|string',
+                'jenis_soal' => 'required|string',
             ]);
 
             $dataUpdate = [
@@ -171,15 +175,16 @@ class QuizQuestionController
                 'question_text' => $validatedData['question_text'],
                 'question_type' => $question_type,
                 'correct_answer' => $validatedData['correct_answer'],
+                'jenis_soal' => $validatedData['jenis_soal'],
             ];
         }
 
         $quizQuestion = QuizQuestion::where('id', $quizQuestion->id)->update($dataUpdate);
 
         if ($quizQuestion) {
-            return redirect()->route('course.content.show-content', ['course' => $course->id, 'courseContents' => $courseContents->id, 'tipe' => 'Quiz'])->with('successToast', 'Berhasil menambahkan soal');
+            return redirect()->route('course.content.show-content', ['course' => $course->id, 'courseContents' => $courseContents->id, 'tipe' => 'Quiz'])->with('successToast', 'Berhasil mengupdate soal');
         } else {
-            return redirect()->route('course.content.show-content', ['course' => $course->id, 'courseContents' => $courseContents->id, 'tipe' => 'Quiz'])->with('errorToast', 'Gagal menambahkan soal');
+            return redirect()->route('course.content.show-content', ['course' => $course->id, 'courseContents' => $courseContents->id, 'tipe' => 'Quiz'])->with('errorToast', 'Gagal mengupdate soal');
         }
     }
 
@@ -209,9 +214,11 @@ class QuizQuestionController
     {
         $scoreData = json_decode($request->score, true);
         $attemptScore = 0;
+
         foreach ($scoreData as $score) {
             $answerId = $score['answer_id'];
             $answerScore = $score['score'];
+            $feedback = $score['feedback'] == "" ? null : $score['feedback'];
 
             $where = [
                 'id' => $answerId,
@@ -221,14 +228,14 @@ class QuizQuestionController
 
             $correct = $answerScore > 0 ? true : false;
             $attemptScore += $answerScore;
-            QuizAnswer::where($where)->update(['score' => $answerScore, 'isCorrect' => $correct]);
+            QuizAnswer::where($where)->update(['score' => $answerScore, 'isCorrect' => $correct, 'feedback' => $feedback]);
         }
 
         QuizAttempts::where('id', $request->attempt_id)->update(['score' => $attemptScore]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Hasil disimpan'
+            'message' => 'Perubahan disimpan'
         ]);
     }
 }

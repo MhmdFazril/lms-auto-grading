@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('markFlag')->default(false);
             $table->boolean('isCorrect')->nullable();
             $table->double('score')->nullable();
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }

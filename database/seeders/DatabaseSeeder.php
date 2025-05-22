@@ -231,13 +231,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //user admin
-        User::create([
-            'nama' => 'MAS ADMIN ',
-            'email' => 'admin@mail.com',
-            'password' => bcrypt('admin123'),
-            'role' => 'admin',
-            'kode_admin' => 'admin123'
-        ]);
+        // User::create([
+        //     'nama' => 'MAS ADMIN ',
+        //     'email' => 'admin@mail.com',
+        //     'password' => bcrypt('admin123'),
+        //     'role' => 'admin',
+        //     'kode_admin' => 'admin123'
+        // ]);
 
         School::create([
             'nama' => 'SMK GRAFIKA YAYASAN LEKTUR',

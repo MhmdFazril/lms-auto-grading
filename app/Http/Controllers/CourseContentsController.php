@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseContents;
 use Illuminate\Http\Request;
 use App\Models\CourseSections;
+use App\Models\QuizAttempts;
 
 class CourseContentsController
 {
@@ -92,5 +93,55 @@ class CourseContentsController
         ];
 
         return view('admin.course.showContent-' . ucfirst($tipe), $data);
+    }
+
+    public function changeAttemptReview(Request $request)
+    {
+        $review = '';
+        if ($request->text == 'No') {
+            $review = true;
+            $reviewText = 'Yes';
+        } else {
+            $review = false;
+            $reviewText = 'No';
+        }
+
+        $update = QuizAttempts::where(['id' => $request->attempt_id, 'course_content_id' => $request->content_id])->update([
+            'review' => $review
+        ]);
+
+        if ($update) {
+            return response()->json([
+                'success' => true,
+                'message' => "berhasil update status review",
+                'review' => $reviewText
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => "berhasil update status review",
+            ]);
+        }
+    }
+
+
+    public function changeAttemptReviewAll(Request $request)
+    {
+        $reviewBool = $request->all == 'true' ? 1 : 0;
+        $update = QuizAttempts::where('course_content_id', $request->content_id)->update([
+            'review' => $reviewBool
+        ]);
+
+        if ($update) {
+            return response()->json([
+                'success' => true,
+                'message' => 'berhasil mengubah status review semua siswa'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'gagal mengubah status review semua siswa'
+            ]);
+        }
     }
 }

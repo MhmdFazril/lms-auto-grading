@@ -15,7 +15,7 @@
                 @csrf
                 <div>
                     <label class="block mb-1">NIP | NIS</label>
-                    <input type="text" class="input w-full" placeholder="Type here" name="nomor"
+                    <input type="text" class="input w-full" autofocus placeholder="Type here" name="nomor"
                         value="{{ old('nomor') }}" autocomplete="off" onkeyup="safeInput(this)" maxlength="20"
                         id="nomor" />
                     @error('nomor')
