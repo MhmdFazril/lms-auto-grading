@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- <link rel="icon" href="{{ asset('img/grafika-logo.png') }}" type="image/png"> --}}
+
+    {{-- https to http problem --}}
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    {{-- for development --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
+    {{-- for productions --}}
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-D3jZLuVU.css', true) }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css', true) }}"> --}}
 
     {{-- cdn fontawesome --}}
     <script src="https://kit.fontawesome.com/0b6be34a48.js" crossorigin="anonymous"></script>

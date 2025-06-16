@@ -9,7 +9,7 @@
                 <span class="inline-block mr-2">Guru Kelas</span>
                 <span class="inline-block">
                     <select class="select" name="wali_kelas" id="wali_kelas" onchange="saveGuru(this.value)">
-                        <option disabled selected>Pilih guru</option>
+                        <option value="" selected>Pilih guru</option>
                         @foreach ($teacher as $teacher)
                             <option value="{{ $teacher->id }}" {{ $mclass->teacher_id == $teacher->id ? 'selected' : '' }}>
                                 {{ $teacher->nama }}

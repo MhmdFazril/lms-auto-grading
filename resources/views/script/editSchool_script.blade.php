@@ -42,7 +42,7 @@
 
 
         // ===================================
-        let defaultImage = "{{ asset('img/user-default.png') }}";
+        let defaultImage = "{{ asset('img/school-default.png') }}";
 
         // Ketika tombol upload diklik
         $("#uploadButton").on("click", function(e) {

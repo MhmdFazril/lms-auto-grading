@@ -26,7 +26,8 @@
 
             <ul tabindex="0" class="menu dropdown-content bg-grf-primary rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
                 <li>
-                    <a href="#" class="text-slate-100"><i class="fa-solid fa-circle-user"></i> Profile</a>
+                    <a href="{{ route('profile') }}" class="text-slate-100"><i class="fa-solid fa-circle-user"></i>
+                        Profile</a>
                 </li>
                 <li>
                     <a href="{{ route('logout') }}" class="text-slate-100"><i

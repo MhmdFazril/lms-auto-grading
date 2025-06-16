@@ -15,6 +15,7 @@
 
                 <input type="hidden" name="nama_old" id="nama->old" value="{{ $school->nama }}">
                 <input type="hidden" name="alamat_old" id="alamat->old" value="{{ $school->alamat }}">
+                <input type="hidden" name="gambar_old" id="gambar->old" value="{{ $school->gambar }}">
                 <input type="hidden" name="remove_image" id="remove_image" value="0">
 
                 <div class="collapse collapse-plus bg-base-100 border border-base-300">

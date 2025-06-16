@@ -110,7 +110,9 @@ class SchoolController
         }
 
         if ($request->remove_image) {
-            Storage::delete($request->gambar_old);
+            if ($request->gambar_old != null) {
+                Storage::delete($request->gambar_old);
+            }
             $validateData['gambar'] = null;
         }
 
@@ -124,6 +126,10 @@ class SchoolController
      */
     public function destroy(School $school)
     {
+        if ($school->gambar != null) {
+            Storage::delete($school->gambar);
+        }
+
         School::destroy($school->id);
 
         return redirect()->route('school.index')->with('successToast', 'Data sekolah berhasil dihapus');

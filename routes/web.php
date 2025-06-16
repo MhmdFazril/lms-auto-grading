@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\AcademicYearController;
-use App\Http\Controllers\AdminController;
+use App\Models\QuizAttempts;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CourseContentsController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LogosController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MclassController;
-use App\Http\Controllers\QuestionImportController;
-use App\Http\Controllers\QuizAttemptsController;
-use App\Http\Controllers\QuizController;
-use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SclassController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\QuizAttemptsController;
+use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\StudentCourseController;
-use App\Models\QuizAttempts;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseContentsController;
+use App\Http\Controllers\QuestionImportController;
 
 
 // =============== KHUSUS BELUM LOGIN ==============
@@ -34,6 +35,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
 
     // =============== PREFIX UNTUK ROLE ADMIN ==============
     Route::prefix('admin')->middleware('role:admin')->group(function () {

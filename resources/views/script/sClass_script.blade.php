@@ -139,7 +139,7 @@
     function saveGuru(val) {
         let formData = new FormData();
         formData.append('id_class', $('#id_class').text())
-        formData.append('teacher', val)
+        formData.append('teacher', val == '' ? 'kosong' : val)
 
         sendAjax("{{ route('sclass.saveTeacher') }}", formData)
             // .then(response => {

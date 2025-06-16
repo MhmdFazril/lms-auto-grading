@@ -22,6 +22,7 @@
 
     @include('components.toast')
 
+    {{-- <script src="{{ asset('js/customFunc.js', true) }}"></script> --}}
     <script src="{{ asset('js/customFunc.js') }}"></script>
 
 

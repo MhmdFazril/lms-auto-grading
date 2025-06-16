@@ -152,7 +152,7 @@ class AdminController
 
     function updateTeacher(Request $request)
     {
-
+        // dd($request);
         $rules = [
             'nama' => 'required|string|max:100',
             'tempat_tgl_lahir' => 'required|string|max:100',
@@ -194,7 +194,9 @@ class AdminController
         }
 
         if ($request->remove_image) {
-            Storage::delete($request->gambar_old);
+            if ($request->gambar_old != null) {
+                Storage::delete($request->gambar_old);
+            }
             $validateData['gambar'] = null;
         }
 
@@ -259,7 +261,9 @@ class AdminController
         }
 
         if ($request->remove_image) {
-            Storage::delete($request->gambar_old);
+            if ($request->gambar_old != null) {
+                Storage::delete($request->gambar_old);
+            }
             $validateData['gambar'] = null;
         }
 

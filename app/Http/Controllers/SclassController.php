@@ -19,7 +19,14 @@ class SclassController
 
         $sclass = Sclass::where('mclass_id', $mclass->id)->get();
 
+        // Ambil semua guru yang sudah dipakai di kelas lain
+        $guruSudahDipakai = Mclass::where('id', '!=', $mclass->id)
+            ->whereNotNull('teacher_id')
+            ->pluck('teacher_id');
+
+        // Ambil semua guru aktif, KECUALI yang sudah dipakai di kelas lain
         $teacher = User::where(['role' => 'teacher', 'aktif' => true])
+            ->whereNotIn('id', $guruSudahDipakai)
             ->orderBy('nama', 'asc')
             ->get();
 
@@ -119,11 +126,17 @@ class SclassController
 
     function saveTeacher(Request $request)
     {
-        $teacherClass_id = Mclass::find($request->id_class);
-        if ($teacherClass_id->teacher_id != $request->teacher) {
-            Mclass::where('id', $request->id_class)->update(['teacher_id' => $request->teacher]);
+        if ($request->teacher == 'kosong') {
+            Mclass::where('id', $request->id_class)->update(['teacher_id' => null]);
+            // komen sementara
+            // Sclass::where('mclass_id', $request->id_class)->update(['teacher_id' => null]);
+        } else {
+            $teacherClass_id = Mclass::find($request->id_class);
+            if ($teacherClass_id->teacher_id != $request->teacher) {
+                Mclass::where('id', $request->id_class)->update(['teacher_id' => $request->teacher]);
 
-            Sclass::where('mclass_id', $request->id_class)->update(['teacher_id' => $request->teacher]);
+                Sclass::where('mclass_id', $request->id_class)->update(['teacher_id' => $request->teacher]);
+            }
         }
 
         return response()->json(true);
