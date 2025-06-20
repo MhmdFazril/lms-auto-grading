@@ -118,14 +118,14 @@
             <h3 class="text-lg font-bold">Add an activity or resource</h3>
 
             <div class="grid grid-cols-3 gap-4 mt-4">
-                <!-- Assignment -->
+                {{-- <!-- Assignment -->
                 <a>
                     <div class="flex flex-col items-center p-4 border rounded-lg shadow hover:bg-gray-100 cursor-pointer content"
                         data-tipe="Assignment">
                         <span class="text-pink-500 text-3xl">📄</span>
                         <span class="mt-2 font-medium">Assignment</span>
                     </div>
-                </a>
+                </a> --}}
 
                 <!-- Quiz -->
                 <a>
@@ -136,14 +136,14 @@
                     </div>
                 </a>
 
-                <!-- File -->
+                {{-- <!-- File -->
                 <a>
                     <div class="flex flex-col items-center p-4 border rounded-lg shadow hover:bg-gray-100 cursor-pointer content"
                         data-tipe="File">
                         <span class="text-green-500 text-3xl">📁</span>
                         <span class="mt-2 font-medium">File</span>
                     </div>
-                </a>
+                </a> --}}
             </div>
 
             <div class="modal-action">

@@ -29,7 +29,6 @@ class QuizQuestionController
     public function storeQuestion(Course $course, CourseContents $courseContents, $question_type, Request $request)
     {
         if ($question_type == 'multiple') {
-
             $validatedData = $request->validate([
                 'question_text' => 'required|string',
                 'bobot' => 'required|integer',
@@ -60,11 +59,15 @@ class QuizQuestionController
             if ($request->has('opsi4')) $options['d'] = $request->opsi4;
             if ($request->has('opsi5')) $options['e'] = $request->opsi5;
 
+            $filteredOptions = array_filter($options, function ($value) {
+                return !empty($value);
+            });
+
             $dataInsert = [
                 'course_content_id' => $courseContents->id,
                 'question_text' => $validatedData['question_text'],
                 'question_type' => $question_type,
-                'option' => $options,
+                'option' => $filteredOptions,
                 'correct_answer' => $validatedData['correct_answer'],
                 'bobot' => $validatedData['bobot'],
             ];

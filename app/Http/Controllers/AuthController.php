@@ -43,7 +43,7 @@ class AuthController
 
             if (Auth::attempt($userAttempt)) {
                 $request->session()->regenerate();
-                return redirect()->intended('/dashboard')->with(
+                return redirect()->intended(route('dashboard.dashboard'))->with(
                     'successToast',
                     'Selamat datang ' .  ucfirst(strtolower(Auth::user()->nama))
                 );

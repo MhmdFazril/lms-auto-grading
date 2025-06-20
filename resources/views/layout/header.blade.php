@@ -44,6 +44,5 @@
             display: none;
         }
     </style>
-
     <title>Elearning | {{ $title }}</title>
 </head>

@@ -5,7 +5,7 @@
         event.preventDefault();
         let form = $('#deleteForm');
 
-        form.attr("action", `/admin/course/${id}`);
+        form.attr("action", `/course/${id}`);
         $("#deleteModal")[0].showModal();
 
         $('#deleteConfirm').on('click', function() {

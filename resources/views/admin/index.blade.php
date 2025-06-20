@@ -8,7 +8,9 @@
                 <h2 class="text-lg font-semibold text-gray-700 mb-3">General Settings</h2>
                 <div class="ml-4 space-y-2">
                     <a href="{{ route('logos') }}" class="text-blue-500 hover:text-blue-600 hover:underline block">Logos</a>
-                    <a href="#" class="text-blue-500 hover:text-blue-600 hover:underline block">Site Settings</a>
+                    <a href="{{ route('dashboard.index') }}"
+                        class="text-blue-500 hover:text-blue-600 hover:underline block">Site
+                        Settings</a>
                 </div>
             </section>
 

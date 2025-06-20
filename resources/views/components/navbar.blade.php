@@ -7,7 +7,13 @@
             E-Learning Grafika YL</p>
     </div>
 
-    @if (Route::currentRouteName() == 'index')
+    {{-- @if (Route::currentRouteName() == 'index')
+        <div class="flex-none">
+            <a href="{{ route('login') }}" class="btn btn-ghost text-white hover:text-black">Login</a>
+        </div>
+    @endif --}}
+
+    @if (!Auth::check())
         <div class="flex-none">
             <a href="{{ route('login') }}" class="btn btn-ghost text-white hover:text-black">Login</a>
         </div>
@@ -44,11 +50,13 @@
         {{ $title }}</h1>
 </div>
 
-@if (Route::currentRouteName() == 'dashboard' ||
+@if (
+    (Route::currentRouteName() == 'dashboard.dashboard' ||
         Route::currentRouteName() == 'site-admin' ||
-        Route::currentRouteName() == 'course.show')
+        Route::currentRouteName() == 'course.show') &&
+        Auth::check())
     <div class="border-b-2 border-b-grf-primary flex space-x-4 overflow-auto">
-        <a href="{{ route('dashboard') }}" class="p-3 hover:bg-grf-primary group ">
+        <a href="{{ route('dashboard.dashboard') }}" class="p-3 hover:bg-grf-primary group ">
             <section class="group-hover:text-white"><i class="fa-solid fa-house"></i> Home</section>
         </a>
 

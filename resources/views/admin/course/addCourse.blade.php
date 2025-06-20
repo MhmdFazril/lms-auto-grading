@@ -59,7 +59,7 @@
                         </div>
 
                         <div>
-                            <label class="block mb-1">Jurusan</label>
+                            <label class="block mb-1">Jurusan <x-tooltip message="required" /></label>
                             <select class="select w-full" name="major_id" id="major_id">
                                 <option disabled selected>Pilih jurusan</option>
                                 <option value="0">Gabungan</option>

@@ -107,6 +107,7 @@ class QuestionImportController
     public function importQuestion(Course $course, CourseContents $courseContent)
     {
         $questions = session()->pull('import_questions');
+        // $questions = session('import_questions');
 
         if (!empty($questions)) {
             foreach ($questions as $index => $question) {
@@ -141,7 +142,6 @@ class QuestionImportController
                         'bobot' => $question['bobot'],
                     ];
                 }
-
                 QuizQuestion::create($dataInput);
             }
 

@@ -22,10 +22,14 @@ use App\Http\Controllers\CourseContentsController;
 use App\Http\Controllers\QuestionImportController;
 
 
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard.dashboard');
+
 // =============== KHUSUS BELUM LOGIN ==============
 Route::middleware('guest')->group(function () {
-    Route::get('/', [IndexController::class, 'index'])->name('index');
-
     // authentication
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
@@ -34,13 +38,20 @@ Route::middleware('guest')->group(function () {
 // =============== KHUSUS SUDAH LOGIN ==============
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
 
     // =============== PREFIX UNTUK ROLE ADMIN ==============
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/site-admin', [AdminController::class, 'index'])->name('site-admin');
+        Route::get('/site-setting', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/site-setting/create', [DashboardController::class, 'create'])->name('dashboard.create');
+        Route::post('/site-setting/store', [DashboardController::class, 'store'])->name('dashboard.store');
+        Route::get('/site-setting/edit/{dashboard}', [DashboardController::class, 'edit'])->name('dashboard.edit');
+        Route::post('/site-setting/update', [DashboardController::class, 'update'])->name('dashboard.update');
+        Route::post('/site-setting/destroy/{dashboard}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+
 
         Route::get('/addTeacher', [AdminController::class, 'addTeacher'])->name('addTeacher');
         Route::get('/addStudent', [AdminController::class, 'addStudent'])->name('addStudent');
